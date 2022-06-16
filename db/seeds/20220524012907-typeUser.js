@@ -6,20 +6,15 @@ module.exports = {
       "typeUsers",
       [
         {
-          type: "Super Admin",
+          type: "Seller",
           createdAt: new Date(),
           updatedAt: new Date(),
         },
         {
-          type: "Admin",
+          type: "Buyer",
           createdAt: new Date(),
           updatedAt: new Date(),
-        },
-        {
-          type: "Member",
-          createdAt: new Date(),
-          updatedAt: new Date(),
-        },
+        }
       ],
       {}
     );
