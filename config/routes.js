@@ -7,9 +7,6 @@ const apiRouter = express.Router();
  *       implementations
  */
 
-// Cars
-apiRouter.get("/api/v1/cars", controllers.api.v1.carController.list);
-
 apiRouter.post("/api/v1/login", controllers.api.v1.authController.login);
 apiRouter.post("/api/v1/register", controllers.api.v1.userController.register);
 apiRouter.post("/api/v1/auth/google", controllers.api.v1.authController.google);

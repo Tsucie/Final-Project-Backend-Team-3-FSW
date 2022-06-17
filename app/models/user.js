@@ -10,6 +10,10 @@ module.exports = (sequelize, DataTypes) => {
     static associate(models) {
       // define association here
       user.belongsTo(models.typeUser, { foreignKey: "type_id" });
+      user.hasMany(models.Product, { foreignKey: "user_id" });
+      user.hasMany(models.Wishlist, { foreignKey: "user_id" });
+      user.hasMany(models.Bargain, { foreignKey: "user_id" });
+      user.hasMany(models.Notification, { foreignKey: "user_id" });
     }
   }
   user.init(
@@ -20,6 +24,10 @@ module.exports = (sequelize, DataTypes) => {
       type_id: DataTypes.INTEGER,
       googleId: DataTypes.STRING,
       registeredVia: DataTypes.STRING,
+      photo: DataTypes.STRING,
+      contact: DataTypes.STRING,
+      city: DataTypes.STRING,
+      address: DataTypes.STRING,
     },
     {
       sequelize,
