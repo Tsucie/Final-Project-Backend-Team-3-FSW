@@ -36,10 +36,10 @@ module.exports = {
         name: user.name,
         email: user.email,
         type: user.type_id,
-        googleId: null,
-        registeredVia: "local api",
-        createdAt: user.createdAt,
-        updatedAt: user.updatedAt,
+        // googleId: null,
+        // registeredVia: "local api",
+        // createdAt: user.createdAt,
+        // updatedAt: user.updatedAt,
       });
 
       delete user.password;

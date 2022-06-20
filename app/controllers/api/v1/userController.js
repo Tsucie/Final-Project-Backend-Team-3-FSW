@@ -17,9 +17,9 @@ module.exports = {
         email,
         encryptedPassword: hashedPassword,
         name: req.body.name,
-        type_id: 3,
+        type_id: req.body.type_id,
         googleId: null,
-        registeredVia: "local api",
+        registeredVia: "application",
         createdAt: new Date(),
         updatedAt: new Date(),
       });
