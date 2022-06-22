@@ -3,8 +3,10 @@ const morgan = require("morgan");
 const router = require("../config/routes");
 const cors = require("cors");
 const path = require("path");
+const bodyparser = require("body-parser");
 
 const app = express();
+app.set("config");
 
 /** Install request logger */
 app.use(morgan("dev"));

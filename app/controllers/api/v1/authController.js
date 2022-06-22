@@ -2,10 +2,11 @@ const userService = require("../../../services/userService");
 const jwt = require("jsonwebtoken");
 const bcrypt = require("bcrypt");
 const axios = require("axios");
+const config = require("../../../../config/appconfig");
 
 function createToken(user) {
-  return jwt.sign(user, process.env.JWT_SECRET_KEY, {
-    expiresIn: 100 * 60,
+  return jwt.sign(user, config.app.jwt_secret_key, {
+    expiresIn: config.app.jwt_expiration_time,
   });
 }
 
@@ -51,7 +52,7 @@ module.exports = {
       res.status(400).json({
         status: "FAIL",
         message: err.message,
-        poses: process.env.JWT_SECRET_KEY,
+        poses: config.app.jwt_secret_key,
       });
     }
   },

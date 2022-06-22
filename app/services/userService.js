@@ -7,4 +7,10 @@ module.exports = {
   async create(data) {
     return userRepository.create(data);
   },
+  async findById(id) {
+    return userRepository.findById(id);
+  },
+  async update(id, data) {
+    return userRepository.update(id, data);
+  }
 };

@@ -11,4 +11,14 @@ module.exports = {
   create(data) {
     return user.create(data);
   },
+  findById(id) {
+    return user.findByPk(id);
+  },
+  update(id, data) {
+    return user.update(data, {
+      where: {
+        id,
+      },
+    });
+  }
 };

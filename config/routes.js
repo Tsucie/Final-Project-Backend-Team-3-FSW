@@ -17,6 +17,8 @@ apiRouter.get("/api/v1/productCategories/:id", controllers.api.v1.productCategor
 
 // Authorized Routes (All)
 apiRouter.get("/api/v1/whoami", authorize.all, controllers.api.v1.authController.whoAmI);
+apiRouter.get("/api/v1/users/:id", authorize.all, controllers.api.v1.userController.getById);
+apiRouter.put("/api/v1/users/:id", authorize.all, controllers.api.v1.userController.update);
 
 // Authorized Routes (Seller)
 apiRouter.post("/api/v1/productCategories", authorize.seller, controllers.api.v1.productCategoryController.create);

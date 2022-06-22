@@ -13,6 +13,7 @@ function verifyToken(req, res) {
 module.exports = {
   all(req, res, next) {
     verifyToken(req, res);
+    next();
   },
   seller(req, res, next) {
     const payload = verifyToken(req, res);
