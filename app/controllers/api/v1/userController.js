@@ -31,7 +31,9 @@ module.exports = {
       delete user_data.encryptedPassword;
 
       res.status(201).json({
-        user: user_data,
+        status: "CREATED",
+        message: "Berhasil registrasi akun",
+        data: user_data,
       });
     } catch (err) {
       res.status(500).json({
@@ -51,7 +53,7 @@ module.exports = {
       }
       const user_data = JSON.parse(JSON.stringify(user));
       delete user_data.encryptedPassword;
-      res.status(200).json({ user: user_data });
+      res.status(200).json({ status: "OK", message: "OK", data: user_data });
     } catch (err) {
       res.status(500).json({
         status: "INTERNAL SERVER ERROR",
@@ -78,12 +80,18 @@ module.exports = {
         const fileUpload = new Resizer(imgPath, `${updatedObj.name}_`);
         const filename = await fileUpload.save(req.file.buffer);
         updatedObj.photo = filename;
-        fs.unlinkSync(path.join(imgPath, user.photo));
+        if (user.photo) {
+          fs.unlinkSync(path.join(imgPath, user.photo));
+        }
       }
       const newUser = await userService.update(req.params.id, updatedObj);
       const userData = JSON.parse(JSON.stringify(newUser));
       delete userData.encryptedPassword;
-      res.status(201).json({ user: userData });
+      res.status(201).json({
+        status: "CREATED",
+        message: "Data akun berhasil diubah",
+        data: userData[1] 
+      });
     } catch (err) {
       res.status(500).json({
         status: "INTERNAL SERVER ERROR",

@@ -7,7 +7,7 @@ function verifyToken(req, res) {
   if (!header) throw res.sendStatus(401); // Unauthorized
   const token = header.split(" ")[1];
   if (!token) return res.sendStatus(403); // Forbidden
-  return jwt.verify(token, config.jwt_secret_key);
+  return jwt.verify(token, config.app.jwt_secret_key);
 }
 
 module.exports = {

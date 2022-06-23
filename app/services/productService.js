@@ -14,7 +14,7 @@ module.exports = {
         condition.where.category_id = filter
         console.log(condition);
       }
-      let { count, rows } = await productRepository.findAllPartially(filter);
+      let { count, rows } = await productRepository.findAllPartially(condition);
       return {
         rows,
         count,

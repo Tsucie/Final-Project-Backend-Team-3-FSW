@@ -9,6 +9,10 @@ module.exports = {
   async getAllPartial(req, res) {
     try {
       let { filter, offset, limit } = req.query;
+      // console.log(filter);
+      // if (!filter) filter = parseInt(filter);
+      // if (!offset) offset = parseInt(offset);
+      // if (!limit) limit = parseInt(limit);
       let products = await productService.findAllPartially(filter, offset, limit);
       return res.status(200).json({ status: "OK", data: products });
     } catch (error) {
@@ -49,7 +53,7 @@ module.exports = {
       if (description) { newProduct.description = description; }
       newProduct.is_sold = false;
       newProduct.status = 1;
-      newProduct.photo = [];
+      newProduct.photos = [];
       // Handle product photos
       if (req.files !== undefined) {
         let i = 0;
@@ -57,7 +61,7 @@ module.exports = {
           i++;
           const fileUpload = new Resizer(pathImgStore, `${name}_${i}`);
           const filename = await fileUpload.save(file.buffer);
-          newProduct.push(filename);
+          newProduct.photos.push(filename);
         }
       }
       const addedProduct = await productService.create(newProduct);
@@ -75,7 +79,7 @@ module.exports = {
   },
   async edit(req, res) {
     try {
-      let { category_id, name, price, description } = req.body;
+      let { category_id, name, price, description, is_sold } = req.body;
       if (!req.params.id) {
         return res.status(400).json({ status: "BAD REQUEST", message: "Data tidak lengkap" });
       }
@@ -84,22 +88,23 @@ module.exports = {
       if (name) newProduct.name = name;
       if (price) newProduct.price = price;
       if (description) newProduct.description = description;
+      if (is_sold) newProduct.is_sold = is_sold;
       // Handle product photos
       if (req.files !== undefined) {
         let i = 0;
-        newProduct.photo = [];
+        newProduct.photos = [];
         for (const file of req.files) {
           i++;
           const fileUpload = new Resizer(pathImgStore, `${name}_${i}`);
           const filename = await fileUpload.save(file.buffer);
-          newProduct.push(filename);
+          newProduct.photos.push(filename);
         }
       }
       const updatedProduct = await productService.update(req.params.id, newProduct);
       return res.status(201).json({
         status: "CREATED",
         message: "Data produk berhasil diubah",
-        data: updatedProduct
+        data: updatedProduct[1]
       });
     } catch (error) {
       return res.status(500).json({
@@ -115,9 +120,9 @@ module.exports = {
       }
       let product = await productService.findById(req.params.id);
       if (product) {
-        // Delete all related photo in public folder
-        if (product.photo && product.photo.length > 0) {
-          product.photo.forEach(item => {
+        // Delete all related photos in public folder
+        if (product.photos && product.photos.length > 0) {
+          product.photos.forEach(item => {
             let imgPath = path.join(pathImgStore, item);
             fs.unlinkSync(imgPath);
           });

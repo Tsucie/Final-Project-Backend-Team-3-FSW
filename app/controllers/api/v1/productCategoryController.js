@@ -12,7 +12,7 @@ module.exports = {
       .catch((error) => {
         console.error(error);
         res.status(500).json({
-          status: "INTERNAL_SERVER_ERROR",
+          status: "INTERNAL SERVER ERROR",
           message: error.message
         });
       });
@@ -22,7 +22,7 @@ module.exports = {
       .then((result) => {
         if (!result) {
           res.status(404).json({
-            status: "NOT_FOUND",
+            status: "NOT FOUND",
             message: "Product category not found",
           });
         }
@@ -36,7 +36,7 @@ module.exports = {
       .catch((error) => {
         console.error(error);
         res.status(500).json({
-          status: "INTERNAL_SERVER_ERROR",
+          status: "INTERNAL SERVER ERROR",
           message: error.message
         });
       });
@@ -52,7 +52,7 @@ module.exports = {
       .catch((error) => {
         console.error(error);
         res.status(500).json({
-          status: "INTERNAL_SERVER_ERROR",
+          status: "INTERNAL SERVER ERROR",
           message: error.message
         });
       });
@@ -62,7 +62,7 @@ module.exports = {
       .then((result) => {
         if (!result) {
           res.status(404).json({
-            status: "NOT_FOUND",
+            status: "NOT FOUND",
             message: "Product category not found",
           });
         }
@@ -76,7 +76,7 @@ module.exports = {
       .catch((error) => {
         console.error(error);
         res.status(500).json({
-          status: "INTERNAL_SERVER_ERROR",
+          status: "INTERNAL SERVER ERROR",
           message: error.message
         });
       });
@@ -86,7 +86,7 @@ module.exports = {
       .then((result) => {
         if (!result) {
           res.status(404).json({
-            status: "NOT_FOUND",
+            status: "NOT FOUND",
             message: "Product category not found",
           });
         }
@@ -100,7 +100,7 @@ module.exports = {
       .catch((error) => {
         console.error(error);
         res.status(500).json({
-          status: "INTERNAL_SERVER_ERROR",
+          status: "INTERNAL SERVER ERROR",
           message: error.message
         });
       });

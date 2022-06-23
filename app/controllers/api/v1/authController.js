@@ -18,17 +18,16 @@ module.exports = {
 
       const user = await userService.findByEmail(email);
       if (!user) {
-        res.status(404).json({ message: "Email not found" });
-        return;
+        return res.status(404).json({ status: "NOT FOUND", message: "Email not found" });
       }
 
       const check = await bcrypt.compare(password, user.encryptedPassword);
 
       if (!check) {
-        res.status(401).json({
+        return res.status(401).json({
+          status: "UNAUTHORIZED",
           message: "Password not match",
         });
-        return;
       }
 
       // create token
@@ -37,22 +36,20 @@ module.exports = {
         name: user.name,
         email: user.email,
         type: user.type_id,
-        // googleId: null,
-        // registeredVia: "local api",
-        // createdAt: user.createdAt,
-        // updatedAt: user.updatedAt,
       });
 
       delete user.password;
 
-      res.status(201).json({
+      return res.status(200).json({
+        status: "OK",
+        message: "Login Berhasil",
         token,
       });
     } catch (err) {
-      res.status(400).json({
-        status: "FAIL",
+      return res.status(500).json({
+        status: "INTERNAL SERVER ERROR",
         message: err.message,
-        poses: config.app.jwt_secret_key,
+        // poses: config.app.jwt_secret_key,
       });
     }
   },
@@ -61,41 +58,43 @@ module.exports = {
     try {
       const bearerToken = req.headers.authorization;
       const token = bearerToken.split("Bearer ")[1];
-      const tokenPayload = jwt.verify(token, process.env.JWT_SIGNATURE_KEY);
+      const tokenPayload = jwt.verify(token, config.app.jwt_secret_key);
 
       req.user = await userService.findByEmail(tokenPayload.email);
 
       if (!req.user) {
-        res.status(404).json({ message: "User not found" });
-        return;
+        return res.status(404).json({
+          status: "NOT FOUND",
+          message: "Pengguna tidak ditemukan"
+        });
       }
       const result = req.user;
 
       res.status(200).json({
-        name: result.name,
-        email: result.email,
-        type: result.type_id,
-        googleId: result.googleId,
-        registeredVia: result.registeredVia,
-        createdAt: result.createdAt,
-        updatedAt: result.updatedAt,
+        status: "OK",
+        message: "Data berhasil ditemukan",
+        data: result
       });
     } catch (err) {
       if (err.message.includes("jwt expired")) {
-        res.status(401).json({ message: "Token Expired" });
-        return;
+        return res.status(401).json({
+          status: "UNAUTHORIZED",
+          message: "Token Expired"
+        });
       }
-      res.status(400).json({
-        status: "FAIL",
+      return res.status(500).json({
+        status: "INTERNAL SERVER ERROR",
         message: err.message,
       });
     }
   },
 
   async google(req, res) {
-    const { access_token } = req.body;
-
+    const { access_token, type_id } = req.body;
     try {
+      if (!access_token || !type_id) {
+        return res.status(400).json({ status: "BAD REQUEST", message: "Data tidak lengkap" });
+      }
       const response = await axios.get(
         `https://www.googleapis.com/oauth2/v3/userinfo?access_token=${access_token}`
       );
@@ -106,7 +105,7 @@ module.exports = {
         user = await userService.create({
           email,
           name,
-          type_id: 3,
+          type_id,
           googleId: sub,
           registeredVia: "google",
           createdAt: new Date(),
@@ -126,11 +125,18 @@ module.exports = {
         createdAt: user.createdAt,
         updatedAt: user.updatedAt,
       });
-
-      res.status(201).json({ token, user: user_data });
+      return res.status(201).json({
+        status: "CREATED",
+        message: "Registrasi OAuth Berhasil", 
+        token, 
+        data: user_data 
+      });
     } catch (err) {
       console.log(err.message);
-      res.status(401).json({ error: { name: err.name, message: err.message } });
+      return res.status(500).json({
+        status: "INTERNAL SERVER ERROR",
+        message: err.message
+      });
     }
   },
 };
