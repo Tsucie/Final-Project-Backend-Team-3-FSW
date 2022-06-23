@@ -29,10 +29,10 @@ module.exports = {
         type: Sequelize.ARRAY(Sequelize.STRING)
       },
       price: {
-        type: Sequelize.INTEGER
+        type: Sequelize.BIGINT
       },
       description: {
-        type: Sequelize.STRING
+        type: Sequelize.TEXT
       },
       is_sold: {
         type: Sequelize.BOOLEAN

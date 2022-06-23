@@ -19,6 +19,8 @@ module.exports = {
       where: {
         id,
       },
+      returning: true,
+      plain: true
     });
   }
 };
