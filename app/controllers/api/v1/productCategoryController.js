@@ -57,7 +57,7 @@ module.exports = {
         });
       });
   },
-  update(req, res) {
+  edit(req, res) {
     productCategoryService.update(req.params.id, req.body)
       .then((result) => {
         if (!result) {

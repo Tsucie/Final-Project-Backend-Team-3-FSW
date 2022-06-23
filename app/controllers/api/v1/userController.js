@@ -1,5 +1,8 @@
 const userService = require("../../../services/userService");
 const bcrypt = require("bcrypt");
+const path = require("path");
+const fs = require("fs");
+const Resizer = require("../../../../utilities/Resizer");
 
 module.exports = {
   async register(req, res) {
@@ -56,9 +59,28 @@ module.exports = {
       });
     }
   },
-  async update(req, res) {
+  async edit(req, res) {
     try {
-      const newUser = await userService.update(req.params.id, req.body);
+      if (!req.params.id || !req.body.name || !req.body.contact) {
+        return res.status(400).json({ status: "BAD REQUEST", message: "Data tidak lengkap"});
+      }
+      let user = await userService.findById(req.params.id);
+      if (!user) {
+        return res.status(404).json({ status: "NOT FOUND", message: "Data user tidak ditemukan"});
+      }
+      let updatedObj = new Object();
+      updatedObj.name = req.body.name;
+      updatedObj.contact = req.body.contact;
+      if (req.body.city) updatedObj.city = req.body.city;
+      if (req.body.address) updatedObj.address = req.body.address;
+      if (req.file) {
+        const imgPath = path.join(__dirname, "/../../../../public/images/user");
+        const fileUpload = new Resizer(imgPath, `${updatedObj.name}_`);
+        const filename = await fileUpload.save(req.file.buffer);
+        updatedObj.photo = filename;
+        fs.unlinkSync(path.join(imgPath, user.photo));
+      }
+      const newUser = await userService.update(req.params.id, updatedObj);
       const userData = JSON.parse(JSON.stringify(newUser));
       delete userData.encryptedPassword;
       res.status(201).json({ user: userData });
