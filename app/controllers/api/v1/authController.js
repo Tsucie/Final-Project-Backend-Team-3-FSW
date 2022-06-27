@@ -90,9 +90,9 @@ module.exports = {
   },
 
   async google(req, res) {
-    const { access_token, type_id } = req.body;
+    const { access_token } = req.body;
     try {
-      if (!access_token || !type_id) {
+      if (!access_token) {
         return res.status(400).json({ status: "BAD REQUEST", message: "Data tidak lengkap" });
       }
       const response = await axios.get(
