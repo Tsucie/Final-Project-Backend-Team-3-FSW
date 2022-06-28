@@ -85,7 +85,7 @@ module.exports = {
       } else {
         // Hapus foto lama
         if (user.photo !== null) {
-          const oldImage = user.fotoUser.substring(65, 85);
+          const oldImage = user.photo.substring(65, 85);
           await cloudinaryDestroy(oldImage);
         }
 
