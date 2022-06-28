@@ -3,6 +3,12 @@ const bcrypt = require("bcrypt");
 const path = require("path");
 const fs = require("fs");
 const Resizer = require("../../../../utilities/Resizer");
+const { promisify } = require("util");
+const cloudinary = require("../../../../config/cloudinary");
+const cloudinaryUpload = promisify(cloudinary.uploader.upload);
+const cloudinaryDestroy = promisify(cloudinary.uploader.destroy);
+const config = require("../../../../config/appconfig");
+const jwt = require("jsonwebtoken");
 
 module.exports = {
   async register(req, res) {
@@ -63,34 +69,48 @@ module.exports = {
   },
   async edit(req, res) {
     try {
-      if (!req.params.id || !req.body.name || !req.body.contact) {
-        return res.status(400).json({ status: "BAD REQUEST", message: "Data tidak lengkap"});
-      }
-      let user = await userService.findById(req.params.id);
-      if (!user) {
-        return res.status(404).json({ status: "NOT FOUND", message: "Data user tidak ditemukan"});
-      }
-      let updatedObj = new Object();
-      updatedObj.name = req.body.name;
-      updatedObj.contact = req.body.contact;
-      if (req.body.city) updatedObj.city = req.body.city;
-      if (req.body.address) updatedObj.address = req.body.address;
-      if (req.file) {
-        const imgPath = path.join(__dirname, "/../../../../public/images/user");
-        const fileUpload = new Resizer(imgPath, `${updatedObj.name}_`);
-        const filename = await fileUpload.save(req.file.buffer);
-        updatedObj.photo = filename;
-        if (user.photo) {
-          fs.unlinkSync(path.join(imgPath, user.photo));
+      const bearerToken = req.headers.authorization;
+      const token = bearerToken.split("Bearer ")[1];
+
+      const tokenPayload = jwt.verify(token, config.app.jwt_secret_key);
+      const user = JSON.parse(JSON.stringify(await userService.findByEmail(tokenPayload.email)));
+      delete user.password;
+
+      if (req.file === undefined || req.file === null) {
+        user.name = req.body.name;
+        user.city = req.body.city;
+        user.address = req.body.address;
+        user.contact = req.body.contact;
+        user.updatedAt = new Date();
+      } else {
+        // Hapus foto lama
+        if (user.photo !== null) {
+          const oldImage = user.fotoUser.substring(65, 85);
+          await cloudinaryDestroy(oldImage);
         }
+
+        // Upload foto baru
+        const fileBase64 = req.file.buffer.toString("base64");
+        const file = `data:${req.file.mimetype};base64,${fileBase64}`;
+        const result = await cloudinaryUpload(file);
+        const url = result.secure_url;
+
+        // Masukan ke object Args
+        user.name = req.body.name;
+        user.city = req.body.city;
+        user.address = req.body.address;
+        user.contact = req.body.contact;
+        user.photo = url;
+        user.updatedAt = new Date();
       }
-      const newUser = await userService.update(req.params.id, updatedObj);
-      const userData = JSON.parse(JSON.stringify(newUser));
-      delete userData.encryptedPassword;
-      res.status(201).json({
-        status: "CREATED",
-        message: "Data akun berhasil diubah",
-        data: userData[1] 
+
+      await userService.update(user.id, user);
+      delete user.password;
+
+      res.status(200).json({
+        status: "OK",
+        message: "User Updated",
+        data: JSON.parse(JSON.stringify(user)),
       });
     } catch (err) {
       res.status(500).json({
@@ -98,5 +118,5 @@ module.exports = {
         message: err.message,
       });
     }
-  }
+  },
 };

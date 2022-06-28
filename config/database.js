@@ -15,6 +15,7 @@ module.exports = {
     database: `${DB_NAME}_dev`,
     host: DB_HOST,
     dialect: "postgres",
+    ssl: true,
   },
   test: {
     username: DB_USERNAME,

@@ -1,8 +1,8 @@
 const express = require("express");
 const controllers = require("../app/controllers");
 const apiRouter = express.Router();
-const authorize = require('../utilities/authorize');
-const upload = require("../utilities/uploadmiddleware");
+const authorize = require("../utilities/authorize");
+const upload = require("./upload");
 
 /**
  * TODO: Implement your own API
