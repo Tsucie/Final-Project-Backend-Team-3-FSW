@@ -105,7 +105,7 @@ module.exports = {
         user = await userService.create({
           email,
           name,
-          type_id: 2,
+          type_id: null,
           googleId: sub,
           registeredVia: "google",
           createdAt: new Date(),

@@ -2,22 +2,22 @@
 
 module.exports = {
   async up(queryInterface, Sequelize) {
-    // await queryInterface.bulkInsert(
-    //   "typeUsers",
-    //   [
-    //     {
-    //       type: "Seller",
-    //       createdAt: new Date(),
-    //       updatedAt: new Date(),
-    //     },
-    //     {
-    //       type: "Buyer",
-    //       createdAt: new Date(),
-    //       updatedAt: new Date(),
-    //     }
-    //   ],
-    //   {}
-    // );
+    await queryInterface.bulkInsert(
+      "typeUsers",
+      [
+        {
+          type: "Seller",
+          createdAt: new Date(),
+          updatedAt: new Date(),
+        },
+        {
+          type: "Buyer",
+          createdAt: new Date(),
+          updatedAt: new Date(),
+        }
+      ],
+      {}
+    );
   },
 
   async down(queryInterface, Sequelize) {

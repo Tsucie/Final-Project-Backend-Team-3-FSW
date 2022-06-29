@@ -1,7 +1,9 @@
 const productService = require("../../../services/productService");
 const path = require("path");
-const fs = require("fs");
-const Resizer = require("../../../../utilities/Resizer");
+const { promisify } = require("util");
+const cloudinary = require("../../../../config/cloudinary");
+const cloudinaryUpload = promisify(cloudinary.uploader.upload);
+const cloudinaryDestroy = promisify(cloudinary.uploader.destroy);
 
 const pathImgStore = path.join(__dirname, "/../../../../public/images/product");
 
@@ -9,10 +11,6 @@ module.exports = {
   async getAllPartial(req, res) {
     try {
       let { filter, offset, limit } = req.query;
-      // console.log(filter);
-      // if (!filter) filter = parseInt(filter);
-      // if (!offset) offset = parseInt(offset);
-      // if (!limit) limit = parseInt(limit);
       let products = await productService.findAllPartially(filter, offset, limit);
       return res.status(200).json({ status: "OK", data: products });
     } catch (error) {
@@ -45,6 +43,7 @@ module.exports = {
       if (!category_id || !user_id || !name || !price) {
         return res.status(400).json({ status: "BAD REQUEST", message: "Data tidak lengkap" });
       }
+      console.log(req.file);
       let newProduct = new Object();
       newProduct.category_id = category_id;
       newProduct.user_id = user_id;
@@ -56,12 +55,13 @@ module.exports = {
       newProduct.photos = [];
       // Handle product photos
       if (req.files !== undefined) {
-        let i = 0;
+        // Upload setiap foto baru
         for (const file of req.files) {
-          i++;
-          const fileUpload = new Resizer(pathImgStore, `${name}_${i}`);
-          const filename = await fileUpload.save(file.buffer);
-          newProduct.photos.push(filename);
+          const fileBase64 = file.buffer.toString("base64");
+          const fileUpload = `data:${file.mimetype};base64,${fileBase64}`;
+          const result = await cloudinaryUpload(fileUpload);
+          const url = result.secure_url;
+          newProduct.photos.push(url);
         }
       }
       const addedProduct = await productService.create(newProduct);
@@ -83,6 +83,7 @@ module.exports = {
       if (!req.params.id) {
         return res.status(400).json({ status: "BAD REQUEST", message: "Data tidak lengkap" });
       }
+      const product = JSON.parse(JSON.stringify(await productService.findById(req.params.id)));
       let newProduct = new Object();
       if (category_id) newProduct.category_id = category_id;
       if (name) newProduct.name = name;
@@ -91,13 +92,21 @@ module.exports = {
       if (is_sold) newProduct.is_sold = is_sold;
       // Handle product photos
       if (req.files !== undefined) {
-        let i = 0;
+        // Hapus photo lama
+        if (product.photos && product.photos.length > 0) {
+          for (const photo of product.photos) {
+            const oldImage = photo.substring(65,85);
+            await cloudinaryDestroy(oldImage);
+          }
+        }
+        // Upload setiap foto baru
         newProduct.photos = [];
         for (const file of req.files) {
-          i++;
-          const fileUpload = new Resizer(pathImgStore, `${name}_${i}`);
-          const filename = await fileUpload.save(file.buffer);
-          newProduct.photos.push(filename);
+          const fileBase64 = file.buffer.toString("base64");
+          const fileUpload = `data:${file.mimetype};base64,${fileBase64}`;
+          const result = await cloudinaryUpload(fileUpload);
+          const url = result.secure_url;
+          newProduct.photos.push(url);
         }
       }
       const updatedProduct = await productService.update(req.params.id, newProduct);
@@ -122,10 +131,10 @@ module.exports = {
       if (product) {
         // Delete all related photos in public folder
         if (product.photos && product.photos.length > 0) {
-          product.photos.forEach(item => {
-            let imgPath = path.join(pathImgStore, item);
-            fs.unlinkSync(imgPath);
-          });
+          for (const photo of product.photos) {
+            const oldImage = photo.substring(65,85);
+            await cloudinaryDestroy(oldImage);
+          }
         }
         await productService.delete(req.params.id);
         return res.status(202).json({ status: "ACCEPTED", message: "Data berhasil dihapus" });

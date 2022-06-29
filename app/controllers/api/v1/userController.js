@@ -1,8 +1,6 @@
 const userService = require("../../../services/userService");
 const bcrypt = require("bcrypt");
 const path = require("path");
-const fs = require("fs");
-const Resizer = require("../../../../utilities/Resizer");
 const { promisify } = require("util");
 const cloudinary = require("../../../../config/cloudinary");
 const cloudinaryUpload = promisify(cloudinary.uploader.upload);
@@ -26,7 +24,7 @@ module.exports = {
         email,
         encryptedPassword: hashedPassword,
         name: req.body.name,
-        type_id: req.body.type_id,
+        type_id: null,
         googleId: null,
         registeredVia: "application",
         createdAt: new Date(),
@@ -77,6 +75,7 @@ module.exports = {
       delete user.password;
 
       if (req.file === undefined || req.file === null) {
+        user.type_id = 1;
         user.name = req.body.name;
         user.city = req.body.city;
         user.address = req.body.address;
@@ -96,6 +95,7 @@ module.exports = {
         const url = result.secure_url;
 
         // Masukan ke object Args
+        user.type_id = 1;
         user.name = req.body.name;
         user.city = req.body.city;
         user.address = req.body.address;
