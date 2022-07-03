@@ -8,10 +8,10 @@ module.exports = {
           status: 1,
         },
         offset: offset,
-        limit: limit
+        limit: limit,
       });
       if (filter) {
-        condition.where.category_id = filter
+        condition.where.category_id = filter;
         console.log(condition);
       }
       let { count, rows } = await productRepository.findAllPartially(condition);
@@ -19,14 +19,17 @@ module.exports = {
         rows,
         count,
         offset,
-        limit
-      }
+        limit,
+      };
     } catch (error) {
       throw error;
     }
   },
   async findById(id) {
     return productRepository.findById(id);
+  },
+  async getByName(name) {
+    return productRepository.findByName(name);
   },
   async create(data) {
     return productRepository.create(data);
@@ -36,5 +39,5 @@ module.exports = {
   },
   async delete(id) {
     return productRepository.delete(id);
-  }
-}
+  },
+};

@@ -16,7 +16,7 @@ module.exports = {
     } catch (error) {
       return res.status(500).json({
         status: "INTERNAL SERVER ERROR",
-        message: error.message
+        message: error.message,
       });
     }
   },
@@ -33,7 +33,20 @@ module.exports = {
     } catch (error) {
       return res.status(500).json({
         status: "INTERNAL SERVER ERROR",
-        message: error.message
+        message: error.message,
+      });
+    }
+  },
+  async getProductByName(req, res) {
+    try {
+      let name = req.query.name.toLowerCase();
+      let products = await productService.getByName(name);
+      console.log(name);
+      return res.status(200).json({ status: "OK", data: products });
+    } catch (error) {
+      return res.status(500).json({
+        status: "INTERNAL SERVER ERROR",
+        message: error.message,
       });
     }
   },
@@ -49,7 +62,9 @@ module.exports = {
       newProduct.user_id = user_id;
       newProduct.name = name;
       newProduct.price = price;
-      if (description) { newProduct.description = description; }
+      if (description) {
+        newProduct.description = description;
+      }
       newProduct.is_sold = false;
       newProduct.status = 1;
       newProduct.photos = [];
@@ -68,15 +83,16 @@ module.exports = {
       return res.status(201).json({
         status: "CREATED",
         message: "Data produk berhasil ditambahkan",
-        data: addedProduct
+        data: addedProduct,
       });
     } catch (error) {
       return res.status(500).json({
         status: "INTERNAL SERVER ERROR",
-        message: error.message
+        message: error.message,
       });
     }
   },
+
   async edit(req, res) {
     try {
       let { category_id, name, price, description, is_sold } = req.body;
@@ -95,7 +111,7 @@ module.exports = {
         // Hapus photo lama
         if (product.photos && product.photos.length > 0) {
           for (const photo of product.photos) {
-            const oldImage = photo.substring(65,85);
+            const oldImage = photo.substring(65, 85);
             await cloudinaryDestroy(oldImage);
           }
         }
@@ -113,12 +129,12 @@ module.exports = {
       return res.status(201).json({
         status: "CREATED",
         message: "Data produk berhasil diubah",
-        data: updatedProduct[1]
+        data: updatedProduct[1],
       });
     } catch (error) {
       return res.status(500).json({
         status: "INTERNAL SERVER ERROR",
-        message: error.message
+        message: error.message,
       });
     }
   },
@@ -132,21 +148,20 @@ module.exports = {
         // Delete all related photos in public folder
         if (product.photos && product.photos.length > 0) {
           for (const photo of product.photos) {
-            const oldImage = photo.substring(65,85);
+            const oldImage = photo.substring(65, 85);
             await cloudinaryDestroy(oldImage);
           }
         }
         await productService.delete(req.params.id);
         return res.status(202).json({ status: "ACCEPTED", message: "Data berhasil dihapus" });
-      }
-      else {
+      } else {
         return res.status(404).json({ status: "NOT FOUND", message: "Data tidak ditemukan" });
       }
     } catch (error) {
       return res.status(500).json({
         status: "INTERNAL SERVER ERROR",
-        message: error.message
+        message: error.message,
       });
     }
-  }
-}
+  },
+};

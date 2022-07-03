@@ -1,11 +1,20 @@
 const { Product } = require("../models");
-
+const { Op } = require("sequelize");
 module.exports = {
   findAllPartially(filter) {
     return Product.findAndCountAll(filter);
   },
   findById(id) {
     return Product.findByPk(id);
+  },
+  findByName(name) {
+    return Product.findAll({
+      where: {
+        name: {
+          [Op.iLike]: `%${name}%`,
+        },
+      },
+    });
   },
   create(data) {
     return Product.create(data);
@@ -14,6 +23,6 @@ module.exports = {
     return Product.update(data, { where: { id }, returning: true, plain: true });
   },
   delete(id) {
-    return Product.update({ status: 0, deletedAt: new Date() }, { where: { id }});
-  }
-}
+    return Product.update({ status: 0, deletedAt: new Date() }, { where: { id } });
+  },
+};
