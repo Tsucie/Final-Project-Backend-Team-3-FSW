@@ -39,7 +39,7 @@ module.exports = {
   },
   async getProductByName(req, res) {
     try {
-      let name = req.query.name.toLowerCase();
+      let name = req.body.name.toLowerCase();
       let products = await productService.getByName(name);
       console.log(name);
       return res.status(200).json({ status: "OK", data: products });
