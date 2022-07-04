@@ -57,7 +57,7 @@ module.exports = {
       }
       const user_data = JSON.parse(JSON.stringify(user));
       delete user_data.encryptedPassword;
-      res.status(200).json({ status: "OK", message: "OK", data: user_data });
+      res.status(200).json({ status: "GET_USER", message: "OK", data: user_data });
     } catch (err) {
       res.status(500).json({
         status: "INTERNAL SERVER ERROR",
@@ -108,7 +108,7 @@ module.exports = {
       delete user.password;
 
       res.status(200).json({
-        status: "OK",
+        status: "USER_UPDATED",
         message: "User Updated",
         data: JSON.parse(JSON.stringify(user)),
       });
