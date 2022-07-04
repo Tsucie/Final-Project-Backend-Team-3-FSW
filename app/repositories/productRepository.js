@@ -1,11 +1,16 @@
-const { Product } = require("../models");
+const { Product, user, ProductCategory } = require("../models");
 const { Op } = require("sequelize");
 module.exports = {
   findAllPartially(filter) {
     return Product.findAndCountAll(filter);
   },
   findById(id) {
-    return Product.findByPk(id);
+    return Product.findOne({
+      where: {
+        id,
+      },
+      include: [ user, ProductCategory ]
+    });
   },
   findByName(name) {
     return Product.findAll({

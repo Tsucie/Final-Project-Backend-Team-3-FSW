@@ -12,7 +12,7 @@ module.exports = {
   development: {
     username: DB_USERNAME,
     password: DB_PASSWORD,
-    database: `${DB_NAME}`,
+    database: `${DB_NAME}_dev`,
     host: DB_HOST,
     dialect: "postgres",
     ssl: true,
