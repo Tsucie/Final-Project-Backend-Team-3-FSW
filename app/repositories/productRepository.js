@@ -8,6 +8,7 @@ module.exports = {
     return Product.findOne({
       where: {
         id,
+        status: 1,
       },
       include: [ user, ProductCategory ]
     });
@@ -18,6 +19,7 @@ module.exports = {
         name: {
           [Op.iLike]: `%${name}%`,
         },
+        status: 1,
       },
     });
   },

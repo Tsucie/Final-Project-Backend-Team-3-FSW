@@ -1,6 +1,5 @@
 const userService = require("../../../services/userService");
 const bcrypt = require("bcrypt");
-const path = require("path");
 const { promisify } = require("util");
 const cloudinary = require("../../../../config/cloudinary");
 const cloudinaryUpload = promisify(cloudinary.uploader.upload);
@@ -24,7 +23,7 @@ module.exports = {
         email,
         encryptedPassword: hashedPassword,
         name: req.body.name,
-        type_id: null,
+        type_id: 2,
         googleId: null,
         registeredVia: "application",
         createdAt: new Date(),
