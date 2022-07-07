@@ -13,6 +13,7 @@ module.exports = (sequelize, DataTypes) => {
       // define association here
       Bargain.belongsTo(models.user, { foreignKey: "user_id" });
       Bargain.belongsTo(models.Product, { foreignKey: "product_id" });
+      Bargain.hasOne(models.Notification, { foreignKey: "bargain_id" });
     }
   }
   Bargain.init({

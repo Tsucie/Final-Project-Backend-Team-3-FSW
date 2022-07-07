@@ -1,11 +1,8 @@
 const productService = require("../../../services/productService");
-const path = require("path");
 const { promisify } = require("util");
 const cloudinary = require("../../../../config/cloudinary");
 const cloudinaryUpload = promisify(cloudinary.uploader.upload);
 const cloudinaryDestroy = promisify(cloudinary.uploader.destroy);
-
-const pathImgStore = path.join(__dirname, "/../../../../public/images/product");
 
 module.exports = {
   async getAllPartial(req, res) {
