@@ -10,7 +10,7 @@ module.exports = {
         id,
         status: 1,
       },
-      include: [ user, ProductCategory ]
+      include: [user, ProductCategory],
     });
   },
   findByName(name) {
@@ -20,6 +20,20 @@ module.exports = {
           [Op.iLike]: `%${name}%`,
         },
         status: 1,
+      },
+    });
+  },
+  findByIdSeller(user_id) {
+    return Product.findAll({
+      where: {
+        user_id,
+      },
+    });
+  },
+  findByStatus(user_id, status) {
+    return Product.findAll({
+      where: {
+        [Op.and]: [{ user_id: user_id }, { status }],
       },
     });
   },

@@ -25,8 +25,23 @@ module.exports = {
       throw error;
     }
   },
+
   async findById(id) {
     return productRepository.findById(id);
+  },
+  async findByIdSeller(user_id) {
+    try {
+      return await productRepository.findByIdSeller(user_id);
+    } catch (err) {
+      throw err;
+    }
+  },
+  async listByStatus(user_id, status) {
+    try {
+      return await productRepository.findByStatus(user_id, status);
+    } catch (err) {
+      throw err;
+    }
   },
   async getByName(name) {
     return productRepository.findByName(name);

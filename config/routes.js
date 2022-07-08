@@ -18,6 +18,7 @@ apiRouter.get("/api/v1/productCategories/:id", controllers.api.v1.productCategor
 apiRouter.get("/api/v1/products", controllers.api.v1.productController.getAllPartial);
 apiRouter.get("/api/v1/products/:id", controllers.api.v1.productController.getById);
 apiRouter.get("/api/v1/name", controllers.api.v1.productController.getProductByName);
+apiRouter.get("/api/v1/status", controllers.api.v1.productController.getProductsByStatus);
 // Authorized Routes (All)
 apiRouter.get("/api/v1/whoami", authorize.all, controllers.api.v1.authController.whoAmI);
 apiRouter.get("/api/v1/users/:id", authorize.all, controllers.api.v1.userController.getById);

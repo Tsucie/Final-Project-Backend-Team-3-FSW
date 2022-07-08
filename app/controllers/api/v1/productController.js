@@ -37,6 +37,37 @@ module.exports = {
       });
     }
   },
+  async getProductsByStatus(req, res) {
+    try {
+      if (req.query.status === 1) {
+        productService
+          .findByIdSeller(req.query.user_id)
+          .then((data) => {
+            res.status(200).json(data);
+          })
+          .catch((err) => {
+            res.status(500).json({
+              error: err.message,
+            });
+          });
+      } else {
+        productService
+          .listByStatus(req.query.user_id, req.query.status)
+          .then((data) => {
+            res.status(200).json(data);
+          })
+          .catch((err) => {
+            res.status(500).json({
+              error: err.message,
+            });
+          });
+      }
+    } catch (error) {
+      res.status(500).json({
+        error: error.message,
+      });
+    }
+  },
   async getProductByName(req, res) {
     try {
       let name = req.query.name.toLowerCase();
