@@ -65,7 +65,7 @@ module.exports = {
       if (!req.user) {
         return res.status(404).json({
           status: "NOT FOUND",
-          message: "Pengguna tidak ditemukan"
+          message: "Pengguna tidak ditemukan",
         });
       }
       const result = req.user;
@@ -73,13 +73,13 @@ module.exports = {
       res.status(200).json({
         status: "OK",
         message: "Data berhasil ditemukan",
-        data: result
+        data: result,
       });
     } catch (err) {
       if (err.message.includes("jwt expired")) {
         return res.status(401).json({
           status: "UNAUTHORIZED",
-          message: "Token Expired"
+          message: "Token Expired",
         });
       }
       return res.status(500).json({
@@ -95,9 +95,7 @@ module.exports = {
       if (!access_token) {
         return res.status(400).json({ status: "BAD REQUEST", message: "Data tidak lengkap" });
       }
-      const response = await axios.get(
-        `https://www.googleapis.com/oauth2/v3/userinfo?access_token=${access_token}`
-      );
+      const response = await axios.get(`https://www.googleapis.com/oauth2/v3/userinfo?access_token=${access_token}`);
       const { sub, email, name } = response.data;
 
       let user = await userService.findByEmail(email);
@@ -105,7 +103,7 @@ module.exports = {
         user = await userService.create({
           email,
           name,
-          type_id: null,
+          type_id: 1,
           googleId: sub,
           registeredVia: "google",
           createdAt: new Date(),
@@ -127,15 +125,15 @@ module.exports = {
       });
       return res.status(201).json({
         status: "CREATED",
-        message: "Registrasi OAuth Berhasil", 
-        token, 
-        data: user_data 
+        message: "Registrasi OAuth Berhasil",
+        token,
+        data: user_data,
       });
     } catch (err) {
       console.log(err.message);
       return res.status(500).json({
         status: "INTERNAL SERVER ERROR",
-        message: err.message
+        message: err.message,
       });
     }
   },
