@@ -23,7 +23,7 @@ module.exports = {
         email,
         encryptedPassword: hashedPassword,
         name: req.body.name,
-        type_id: null,
+        type_id: 1,
         googleId: null,
         registeredVia: "application",
         createdAt: new Date(),
@@ -74,7 +74,6 @@ module.exports = {
       delete user.password;
 
       if (req.file === undefined || req.file === null) {
-        user.type_id = 1;
         user.name = req.body.name;
         user.city = req.body.city;
         user.address = req.body.address;
@@ -94,7 +93,7 @@ module.exports = {
         const url = result.secure_url;
 
         // Masukan ke object Args
-        user.type_id = 1;
+
         user.name = req.body.name;
         user.city = req.body.city;
         user.address = req.body.address;
