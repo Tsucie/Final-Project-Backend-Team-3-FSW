@@ -3,18 +3,8 @@ const controllers = require("../app/controllers");
 const apiRouter = express.Router();
 const authorize = require("../utilities/authorize");
 const upload = require("./upload");
-// const cors = require("cors");
-// apiRouter.use(cors());
-//Cors Configuration - Start
-app.use((req, res, next) => {
-  res.header("Access-Control-Allow-Origin", "*");
-  res.header("Access-Control-Allow-Headers", "Origin, X-Requested, Content-Type, Accept Authorization");
-  if (req.method === "OPTIONS") {
-    res.header("Access-Control-Allow-Methods", "POST, PUT, PATCH, GET, DELETE");
-    return res.status(200).json({});
-  }
-  next();
-});
+const cors = require("cors");
+apiRouter.use(cors());
 /**
  * TODO: Implement your own API
  *       implementations
