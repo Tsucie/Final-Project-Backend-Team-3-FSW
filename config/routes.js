@@ -3,7 +3,8 @@ const controllers = require("../app/controllers");
 const apiRouter = express.Router();
 const authorize = require("../utilities/authorize");
 const upload = require("./upload");
-
+const cors = require("cors");
+apiRouter.use(cors());
 /**
  * TODO: Implement your own API
  *       implementations
