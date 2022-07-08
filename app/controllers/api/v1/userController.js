@@ -23,7 +23,7 @@ module.exports = {
         email,
         encryptedPassword: hashedPassword,
         name: req.body.name,
-        type_id: 2,
+        type_id: null,
         googleId: null,
         registeredVia: "application",
         createdAt: new Date(),
