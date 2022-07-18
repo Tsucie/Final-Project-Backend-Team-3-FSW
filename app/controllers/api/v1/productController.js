@@ -123,7 +123,7 @@ module.exports = {
 
   async edit(req, res) {
     try {
-      let { category_id, name, price, description, is_sold } = req.body;
+      let { category_id, name, price, description, status } = req.body;
       if (!req.params.id) {
         return res.status(400).json({ status: "BAD REQUEST", message: "Data tidak lengkap" });
       }
@@ -133,7 +133,7 @@ module.exports = {
       if (name) newProduct.name = name;
       if (price) newProduct.price = price;
       if (description) newProduct.description = description;
-      if (is_sold) newProduct.is_sold = is_sold;
+      if (status) newProduct.status = status;
       // Handle product photos
       if (req.files !== undefined) {
         // Hapus photo lama
