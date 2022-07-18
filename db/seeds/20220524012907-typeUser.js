@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 "use strict";
 
 module.exports = {
@@ -14,7 +15,7 @@ module.exports = {
           type: "Buyer",
           createdAt: new Date(),
           updatedAt: new Date(),
-        }
+        },
       ],
       {}
     );

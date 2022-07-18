@@ -10,6 +10,8 @@
     "start": "node ./bin/www",
     "develop": "nodemon -q bin/www",
     "dev": "nodemon -L bin/www",
+    "test": "jest --detectOpenHandles",
+    "eslint": "eslint .",
     "db:create": "sequelize db:create",
     "db:drop": "sequelize db:drop",
     "db:migrate": "sequelize db:migrate",
@@ -35,6 +37,10 @@
     "yamljs": "^0.3.0"
   },
   "devDependencies": {
-    "nodemon": "^2.0.16"
+    "nodemon": "^2.0.16",
+    "eslint": "^8.16.0",
+    "eslint-config-next": "12.1.6",
+    "jest": "^28.1.0",
+    "supertest": "^6.2.3"
   }
 }

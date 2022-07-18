@@ -117,4 +117,10 @@ module.exports = {
       });
     }
   },
+  async deleteUser(req, res) {
+    userService.delete(req.params.email);
+    res.status(200).json({
+      status: "DELETED",
+    });
+  },
 };

@@ -21,7 +21,8 @@ module.exports = {
       return res.sendStatus(403);
     } else next();
   },
-  buyer(req, res, next) {
+  buyer: async (req, res, next) => {
+    const payload = await verifyToken(req, res);
     if (payload.type !== userTypes.Buyer) {
       return res.sendStatus(403);
     } else next();

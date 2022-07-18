@@ -14,6 +14,7 @@ apiRouter.use(cors());
 apiRouter.post("/api/v1/login", controllers.api.v1.authController.login);
 apiRouter.post("/api/v1/register", controllers.api.v1.userController.register);
 apiRouter.post("/api/v1/auth/google", controllers.api.v1.authController.google);
+apiRouter.delete("/api/v1/delete/:email", controllers.api.v1.userController.deleteUser);
 apiRouter.get("/api/v1/productCategories", controllers.api.v1.productCategoryController.getAll);
 apiRouter.get("/api/v1/productCategories/:id", controllers.api.v1.productCategoryController.getById);
 apiRouter.get("/api/v1/products", controllers.api.v1.productController.getAllPartial);
@@ -32,6 +33,9 @@ apiRouter.delete("/api/v1/productCategories/:id", authorize.seller, controllers.
 apiRouter.post("/api/v1/products", authorize.seller, upload.array("photos", 5), controllers.api.v1.productController.create);
 apiRouter.put("/api/v1/products/:id", authorize.seller, upload.array("photos", 5), controllers.api.v1.productController.edit);
 apiRouter.delete("/api/v1/products/:id", authorize.seller, controllers.api.v1.productController.delete);
+apiRouter.get("/api/v1/errors", () => {
+  throw new Error("Second Hand Error");
+});
 
 apiRouter.use(controllers.api.main.onLost);
 apiRouter.use(controllers.api.main.onError);

@@ -12,5 +12,8 @@ module.exports = {
   },
   async update(id, data) {
     return userRepository.update(id, data);
-  }
+  },
+  async delete(email) {
+    return userRepository.delete(email);
+  },
 };

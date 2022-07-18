@@ -1,8 +1,9 @@
-'use strict';
+/* eslint-disable no-unused-vars */
+"use strict";
 
 module.exports = {
-  async up (queryInterface, Sequelize) {
-    await queryInterface.bulkInsert('ProductCategories', [
+  async up(queryInterface, Sequelize) {
+    await queryInterface.bulkInsert("ProductCategories", [
       {
         name: "Aksesoris",
         createdAt: new Date(),
@@ -31,12 +32,12 @@ module.exports = {
     ]);
   },
 
-  async down (queryInterface, Sequelize) {
+  async down(queryInterface, Sequelize) {
     /**
      * Add commands to revert seed here.
      *
      * Example:
      * await queryInterface.bulkDelete('People', null, {});
      */
-  }
+  },
 };

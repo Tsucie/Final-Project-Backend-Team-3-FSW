@@ -14,13 +14,16 @@ module.exports = {
   findById(id) {
     return user.findByPk(id);
   },
+  delete(email) {
+    return user.destroy({ where: { email } });
+  },
   update(id, data) {
     return user.update(data, {
       where: {
         id,
       },
       returning: true,
-      plain: true
+      plain: true,
     });
-  }
+  },
 };

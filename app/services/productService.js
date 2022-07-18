@@ -1,3 +1,4 @@
+/* eslint-disable no-useless-catch */
 const productRepository = require("../repositories/productRepository");
 
 module.exports = {
