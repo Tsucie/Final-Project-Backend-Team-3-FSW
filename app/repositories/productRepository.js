@@ -13,6 +13,9 @@ module.exports = {
       include: [user, ProductCategory],
     });
   },
+  findByIdStat(id) {
+    return Product.findByPk(id, { include: user, ProductCategory });
+  },
   findByName(name) {
     return Product.findAll({
       where: {

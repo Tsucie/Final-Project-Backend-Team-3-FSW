@@ -30,6 +30,9 @@ module.exports = {
   async findById(id) {
     return productRepository.findById(id);
   },
+  async findByIdStat(id) {
+    return productRepository.findByIdStat(id);
+  },
   async findByIdSeller(user_id) {
     try {
       return await productRepository.findByIdSeller(user_id);

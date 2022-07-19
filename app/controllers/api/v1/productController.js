@@ -34,6 +34,23 @@ module.exports = {
       });
     }
   },
+  async getByIdWithoutStatus(req, res) {
+    try {
+      if (!req.params.id) {
+        return res.status(400).json({ status: "BAD REQUEST", message: "Data tidak lengkap" });
+      }
+      let product = await productService.findByIdStat(req.params.id);
+      if (!product) {
+        return res.status(404).json({ status: "NOT FOUND", message: "Data tidak ditemukan" });
+      }
+      return res.status(200).json({ status: "OK", data: product });
+    } catch (error) {
+      return res.status(500).json({
+        status: "INTERNAL SERVER ERROR",
+        message: error.message,
+      });
+    }
+  },
   async getProductsByStatus(req, res) {
     try {
       if (req.query.status === 1) {
