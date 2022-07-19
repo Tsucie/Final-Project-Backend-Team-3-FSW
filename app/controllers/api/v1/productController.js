@@ -53,7 +53,7 @@ module.exports = {
   },
   async getProductsByStatus(req, res) {
     try {
-      if (req.query.status === 1) {
+      if (req.query.status === 1 && req.query.status === 2 && req.query.status === 3) {
         productService
           .findByIdSeller(req.query.user_id)
           .then((data) => {
