@@ -1,4 +1,5 @@
 const bargainService = require("../../../services/bargainService");
+const notificationService = require("../../../services/notificationService");
 
 module.exports = {
   async getList(req, res) {
@@ -35,20 +36,37 @@ module.exports = {
   },
   async create(req, res) {
     try {
-      let { user_id, product_id, price } = req.body;
-      if (!user_id || !product_id || !price) {
+      let { seller_id, buyer_id, product_id, price } = req.body;
+      if (!seller_id || !buyer_id || !product_id || !price) {
         return res.status(400).json({ status: "BAD REQUEST", message: "Data tidak lengkap" });
       }
       let newBargain = {
-        user_id,
+        user_id: buyer_id,
         product_id,
         price,
-        result: null,
+        result: "Diproses Penjual",
         status: 1,
         createdAt: new Date(),
         updatedAt: new Date(),
       };
       const addedBargain = await bargainService.create(newBargain);
+      // Buat notif ke Buyer
+      await notificationService.create({
+        user_id: buyer_id,
+        bargain_id: addedBargain.id,
+        product_id,
+        message: "Penawaran diproses",
+        is_read: false,
+        datetime: new Date(),
+        status: 1,
+        createdAt: new Date(),
+        updatedAt: new Date(),
+      });
+      // Buat notif ke Seller
+      await notificationService.create({
+        user_id: seller_id,
+        
+      });
       return res.status(201).json({
         status: "CREATED",
         message: "Data penawaran berhasil ditambahkan",
