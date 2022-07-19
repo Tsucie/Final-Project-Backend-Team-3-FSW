@@ -188,7 +188,7 @@ module.exports = {
       if (!req.params.id) {
         return res.status(400).json({ status: "BAD REQUEST", message: "Data tidak lengkap" });
       }
-      let product = await productService.findById(req.params.id);
+      let product = await productService.findByIdStat(req.params.id);
       if (product) {
         // Delete all related photos in public folder
         if (product.photos && product.photos.length > 0) {

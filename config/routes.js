@@ -33,7 +33,7 @@ apiRouter.put("/api/v1/productCategories/:id", authorize.seller, controllers.api
 apiRouter.delete("/api/v1/productCategories/:id", authorize.seller, controllers.api.v1.productCategoryController.delete);
 apiRouter.post("/api/v1/products", authorize.seller, upload.array("photos", 5), controllers.api.v1.productController.create);
 apiRouter.put("/api/v1/products/:id", authorize.seller, upload.array("photos", 5), controllers.api.v1.productController.edit);
-apiRouter.delete("/api/v1/products/:id", authorize.seller, controllers.api.v1.productController.delete);
+apiRouter.delete("/api/v1/products/stat/:id", authorize.seller, controllers.api.v1.productController.delete);
 apiRouter.get("/api/v1/errors", () => {
   throw new Error("Second Hand Error");
 });
