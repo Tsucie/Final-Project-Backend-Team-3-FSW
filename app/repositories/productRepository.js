@@ -47,6 +47,6 @@ module.exports = {
     return Product.update(data, { where: { id }, returning: true, plain: true });
   },
   delete(id) {
-    return Product.update({ status: 0, deletedAt: new Date() }, { where: { id } });
+    return Product.update({ deletedAt: new Date() }, { where: { id } });
   },
 };
