@@ -26,11 +26,6 @@ apiRouter.get("/api/v1/status", controllers.api.v1.productController.getProducts
 apiRouter.get("/api/v1/whoami", authorize.all, controllers.api.v1.authController.whoAmI);
 apiRouter.get("/api/v1/users/:id", authorize.all, controllers.api.v1.userController.getById);
 apiRouter.put("/api/v1/users/:id", authorize.all, upload.single("photo"), controllers.api.v1.userController.edit);
-apiRouter.get("/api/v1/bargains", authorize.all, controllers.api.v1.bargainController.getList);
-apiRouter.get("/api/v1/bargains/:id", authorize.all, controllers.api.v1.bargainController.getById);
-apiRouter.post("/api/v1/bargains", authorize.all, controllers.api.v1.bargainController.create);
-apiRouter.put("/api/v1/bargains/:id", authorize.all, controllers.api.v1.bargainController.edit);
-apiRouter.delete("/api/v1/bargains/:id", authorize.all, controllers.api.v1.bargainController.delete);
 apiRouter.get("/api/v1/notifications", authorize.all, controllers.api.v1.notificationController.getList);
 apiRouter.get("/api/v1/notifications/:id", authorize.all, controllers.api.v1.notificationController.getById);
 apiRouter.post("/api/v1/notifications", authorize.all, controllers.api.v1.notificationController.create);

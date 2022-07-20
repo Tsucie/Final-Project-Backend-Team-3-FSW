@@ -12,17 +12,15 @@ module.exports = (sequelize, DataTypes) => {
     static associate(models) {
       // define association here
       Notification.belongsTo(models.user, { foreignKey: "user_id" });
-      Notification.belongsTo(models.Bargain, { foreignKey: "bargain_id" });
       Notification.belongsTo(models.Product, { foreignKey: "product_id" });
     }
   }
   Notification.init({
     user_id: DataTypes.INTEGER,
-    bargain_id: DataTypes.INTEGER,
     product_id: DataTypes.INTEGER,
+    transaction_id: DataTypes.INTEGER,
     message: DataTypes.STRING,
     is_read: DataTypes.BOOLEAN,
-    datetime: DataTypes.DATE,
     status: DataTypes.INTEGER
   }, {
     sequelize,

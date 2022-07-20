@@ -38,6 +38,7 @@ module.exports = {
       is_sold: {
         type: Sequelize.BOOLEAN,
       },
+      // 0 = Deleted; 1 = Dijual; 2 = Ditawar;
       status: {
         type: Sequelize.INTEGER,
       },

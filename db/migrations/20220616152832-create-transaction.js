@@ -9,6 +9,7 @@ module.exports = {
         primaryKey: true,
         type: Sequelize.INTEGER,
       },
+      // Buyer id
       user_id: {
         type: Sequelize.INTEGER,
         references: {
@@ -16,30 +17,18 @@ module.exports = {
           key: "id",
         },
       },
-      bargain_id: {
+      product_id: {
         type: Sequelize.INTEGER,
         references: {
-          model: "Bargains",
+          model: "Products",
           key: "id",
         },
       },
       deal_price: {
         type: Sequelize.INTEGER,
       },
-      tax_percent: {
-        type: Sequelize.INTEGER,
-      },
-      tax_nominal: {
-        type: Sequelize.INTEGER,
-      },
-      total_price: {
-        type: Sequelize.INTEGER,
-      },
-      payment_method: {
-        type: Sequelize.STRING,
-      },
       status: {
-        type: Sequelize.INTEGER,
+        type: Sequelize.STRING,
       },
       createdAt: {
         allowNull: false,

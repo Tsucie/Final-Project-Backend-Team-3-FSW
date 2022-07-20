@@ -16,19 +16,19 @@ module.exports = {
           key: "id",
         },
       },
-      bargain_id: {
-        allowNull: true,
-        type: Sequelize.INTEGER,
-        references: {
-          model: "Bargains",
-          key: "id",
-        },
-      },
       product_id: {
         allowNull: true,
         type: Sequelize.INTEGER,
         references: {
           model: "Products",
+          key: "id",
+        },
+      },
+      transaction_id: {
+        allowNull: true,
+        type: Sequelize.INTEGER,
+        references: {
+          model: "Transactions",
           key: "id",
         },
       },
@@ -38,9 +38,7 @@ module.exports = {
       is_read: {
         type: Sequelize.BOOLEAN,
       },
-      datetime: {
-        type: Sequelize.DATE,
-      },
+      // Tipe Notifikasi (1 = Produk ditawar, 2 = Nawar Produk)
       status: {
         type: Sequelize.INTEGER,
       },
