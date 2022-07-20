@@ -53,7 +53,7 @@ module.exports = {
   },
   async getProductsByStatus(req, res) {
     try {
-      if (req.query.status === 1 && req.query.status === 2 && req.query.status === 3) {
+      if (req.query.status === 1) {
         productService
           .findByIdSeller(req.query.user_id)
           .then((data) => {
@@ -152,7 +152,8 @@ module.exports = {
       if (description) newProduct.description = description;
       if (status) newProduct.status = status;
       // Handle product photos
-      if (req.files !== undefined) {
+      if (req.files.length > 0) {
+        console.log("disini");
         // Hapus photo lama
         if (product.photos && product.photos.length > 0) {
           for (const photo of product.photos) {

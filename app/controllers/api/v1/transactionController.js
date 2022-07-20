@@ -1,3 +1,4 @@
+/* eslint-disable no-undef */
 const transactionService = require("../../../services/transactionService");
 const transactionStatus = require("../../../../utilities/transactionstatusenum");
 const productStatus = require("../../../../utilities/productstatusenum");
@@ -15,7 +16,7 @@ module.exports = {
       return res.status(200).json({
         status: "TRANSACTION_BUYS",
         message: "Data pembelian",
-        data: buys
+        data: buys,
       });
     } catch (error) {
       return res.status(500).json({
@@ -36,7 +37,7 @@ module.exports = {
       return res.status(200).json({
         status: "TRANSACTION_SELLS",
         message: "Data penjualan",
-        data: sells
+        data: sells,
       });
     } catch (error) {
       return res.status(500).json({
@@ -98,8 +99,7 @@ module.exports = {
       }
       if (product_status === productStatus.Sold) {
         transactionService.updateSold(product_id);
-      }
-      else {
+      } else {
         let result = await transactionService.updateAllStatus({ id: product_id, status: productStatus }, { id, status });
         if (!result) throw new Error("Failed update Product Data");
       }
