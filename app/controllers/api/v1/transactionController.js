@@ -57,11 +57,10 @@ module.exports = {
         user_id,
         product_id,
         deal_price,
-        status: "menunggu",
+        status: transactionStatus.Waiting,
         createdAt: new Date(),
         updatedAt: new Date(),
       });
-      console.log(created);
       return res.status(201).json({
         status: "CREATED",
         message: "Data transaksi berhasil dibuat",
