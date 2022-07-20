@@ -54,9 +54,9 @@ module.exports = {
   },
   async getProductsByStatus(req, res) {
     try {
-      if (req.query.user_id !== undefined) {
+      if (req.query.user_id !== undefined && req.query.status !== undefined) {
         productService
-          .findByIdSeller(req.query.user_id)
+          .listByStatus(req.query.user_id, req.query.status)
           .then((data) => {
             res.status(200).json(data);
           })
@@ -65,9 +65,9 @@ module.exports = {
               error: err.message,
             });
           });
-      } else {
+      } else if (req.query.user_id !== undefined) {
         productService
-          .listByStatus(req.query.user_id, req.query.status)
+          .findByIdSeller(req.query.user_id)
           .then((data) => {
             res.status(200).json(data);
           })
