@@ -1,25 +1,25 @@
 const transactionRepository = require("../repositories/transactionRepository");
 
 module.exports = {
-  getByBuyer(user_id) {
+  async getByBuyer(user_id) {
     return transactionRepository.findByBuyer(user_id);
   },
-  getBySeller(user_id) {
+  async getBySeller(user_id) {
     return transactionRepository.findBySeller(user_id);
   },
-  create(data) {
+  async create(data) {
     return transactionRepository.create(data);
   },
-  updateStatus(id, status) {
+  async updateStatus(id, status) {
     return transactionRepository.updateStatus(id, status);
   },
-  updateAllStatus(product, transaction) {
+  async updateAllStatus(product, transaction) {
     return transactionRepository.updateTransactionAndProductStatus(product, transaction);
   },
-  updateSold(product_id) {
+  async updateSold(product_id) {
     return transactionRepository.updateProductSold(product_id);
   },
-  delete(id) {
+  async delete(id) {
     return transactionRepository.delete(id);
-  }
+  },
 };

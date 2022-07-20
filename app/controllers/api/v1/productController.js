@@ -17,6 +17,18 @@ module.exports = {
       });
     }
   },
+  async getAllProduct(req, res) {
+    try {
+      let { user_id } = req.query;
+      let products = await productService.findByIdSeller(user_id);
+      return res.status(200).json({ status: "OK", data: products });
+    } catch (error) {
+      return res.status(500).json({
+        status: "INTERNAL SERVER ERROR",
+        message: error.message,
+      });
+    }
+  },
   async getById(req, res) {
     try {
       if (!req.params.id) {

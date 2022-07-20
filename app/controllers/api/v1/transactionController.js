@@ -1,4 +1,3 @@
-/* eslint-disable no-undef */
 const transactionService = require("../../../services/transactionService");
 const transactionStatus = require("../../../../utilities/transactionstatusenum");
 const productStatus = require("../../../../utilities/productstatusenum");
@@ -8,6 +7,7 @@ module.exports = {
     try {
       const bearerToken = req.headers.authorization;
       const token = bearerToken.split("Bearer ")[1];
+      // eslint-disable-next-line no-undef
       const tokenPayload = jwt.verify(token, config.app.jwt_secret_key);
       if (!tokenPayload.id) {
         return res.status(403).json({ status: "FORBIDDEN", message: "ID kosong" });
@@ -29,6 +29,7 @@ module.exports = {
     try {
       const bearerToken = req.headers.authorization;
       const token = bearerToken.split("Bearer ")[1];
+      // eslint-disable-next-line no-undef
       const tokenPayload = jwt.verify(token, config.app.jwt_secret_key);
       if (!tokenPayload.id) {
         return res.status(403).json({ status: "FORBIDDEN", message: "ID kosong" });
@@ -56,10 +57,11 @@ module.exports = {
         user_id,
         product_id,
         deal_price,
-        status: transactionStatus.Waiting,
+        status: "menunggu",
         createdAt: new Date(),
         updatedAt: new Date(),
       });
+      console.log(created);
       return res.status(201).json({
         status: "CREATED",
         message: "Data transaksi berhasil dibuat",

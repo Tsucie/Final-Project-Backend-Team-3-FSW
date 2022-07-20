@@ -18,6 +18,7 @@ apiRouter.delete("/api/v1/delete/:email", controllers.api.v1.userController.dele
 apiRouter.get("/api/v1/productCategories", controllers.api.v1.productCategoryController.getAll);
 apiRouter.get("/api/v1/productCategories/:id", controllers.api.v1.productCategoryController.getById);
 apiRouter.get("/api/v1/products", controllers.api.v1.productController.getAllPartial);
+apiRouter.get("/api/v1/product", controllers.api.v1.productController.getAllProduct);
 apiRouter.get("/api/v1/products/:id", controllers.api.v1.productController.getById);
 apiRouter.get("/api/v1/products/stat/:id", controllers.api.v1.productController.getByIdWithoutStatus);
 apiRouter.get("/api/v1/name", controllers.api.v1.productController.getProductByName);
@@ -31,7 +32,7 @@ apiRouter.get("/api/v1/notifications/:id", authorize.all, controllers.api.v1.not
 apiRouter.post("/api/v1/notifications", authorize.all, controllers.api.v1.notificationController.create);
 apiRouter.put("/api/v1/notifications/:id", authorize.all, controllers.api.v1.notificationController.update);
 apiRouter.delete("/api/v1/notifications/:id", authorize.all, controllers.api.v1.notificationController.delete);
-
+apiRouter.post("/api/v1/transaction", authorize.all, controllers.api.v1.transactionController.create);
 // Authorized Routes (Seller)
 apiRouter.post("/api/v1/productCategories", authorize.seller, controllers.api.v1.productCategoryController.create);
 apiRouter.put("/api/v1/productCategories/:id", authorize.seller, controllers.api.v1.productCategoryController.edit);
