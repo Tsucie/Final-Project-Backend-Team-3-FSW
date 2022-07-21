@@ -1,4 +1,4 @@
-const { Transaction, Product, users } = require("../models");
+const { Transaction, Product, user } = require("../models");
 const { Op } = require("sequelize");
 const productStatus = require("../../utilities/productstatusenum");
 const transactionStatus = require("../../utilities/transactionstatusenum");
@@ -8,7 +8,7 @@ module.exports = {
     return Transaction.findAll({
       include: [
         { model: Product },
-        { model: users },
+        { model: user },
       ],
       where: { user_id },
     });
@@ -17,15 +17,17 @@ module.exports = {
     return Transaction.findAll({
       include: [
         { model: Product, where: { user_id } },
-        { model: users },
+        { model: user },
       ],
-      where: { status: {
-        [Op.or]: [transactionStatus.Waiting, transactionStatus.Processed],
-      }},
+      where: {
+        status: {
+          [Op.or]: [transactionStatus.Waiting, transactionStatus.Processed],
+        },
+      },
     });
   },
   async create(data) {
-    let upRow = await Product.update({
+    await Product.update({
       status: productStatus.Offered,
       updatedAt: new Date(),
     }, {
@@ -35,8 +37,7 @@ module.exports = {
       returning: true,
       plain: true
     });
-    if (upRow.id) return await Transaction.create(data);
-    else return false;
+    return await Transaction.create(data);
   },
   updateStatus(id, status) {
     return Transaction.update({
@@ -49,7 +50,7 @@ module.exports = {
     });
   },
   async updateTransactionAndProductStatus(product, transaction) {
-    let upRow = await Product.update({ 
+    await Product.update({ 
       status: product.status, 
       updatedAt: new Date(),
     }, {
@@ -57,7 +58,7 @@ module.exports = {
       returning: true,
       plain: true
     });
-    if (upRow.id) return await Transaction.update({
+    return await Transaction.update({
       status: transaction.status,
       updatedAt: new Date(),
     }, {
@@ -67,7 +68,6 @@ module.exports = {
       returning: true,
       plain: true
     });
-    else return false;
   },
   updateProductSold(product_id) {
     Transaction.update({ status: transactionStatus.Rejected }, { where: { product_id }});  

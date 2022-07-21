@@ -3,12 +3,20 @@ const { promisify } = require("util");
 const cloudinary = require("../../../../config/cloudinary");
 const cloudinaryUpload = promisify(cloudinary.uploader.upload);
 const cloudinaryDestroy = promisify(cloudinary.uploader.destroy);
+const jwt = require("jsonwebtoken");
+const config = require("../../../../config/appconfig");
 
 module.exports = {
   async getAllPartial(req, res) {
     try {
       let { filter, offset, limit } = req.query;
-      let products = await productService.findAllPartially(filter, offset, limit);
+      let tokenPayload = {id: null};
+      if (req.headers.authorization !== "") {
+        const bearerToken = req.headers.authorization;
+        const token = bearerToken.split("Bearer ")[1];
+        tokenPayload = jwt.verify(token, config.app.jwt_secret_key);
+      }
+      let products = await productService.findAllPartially(tokenPayload.id, filter, offset, limit);
       return res.status(200).json({ status: "OK", data: products });
     } catch (error) {
       return res.status(500).json({
@@ -111,7 +119,6 @@ module.exports = {
       if (description) {
         newProduct.description = description;
       }
-      newProduct.is_sold = false;
       newProduct.status = 1;
       newProduct.photos = [];
       // Handle product photos

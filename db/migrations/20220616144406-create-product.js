@@ -35,10 +35,7 @@ module.exports = {
       description: {
         type: Sequelize.TEXT,
       },
-      is_sold: {
-        type: Sequelize.BOOLEAN,
-      },
-      // 0 = Deleted; 1 = Dijual; 2 = Ditawar;
+      // 0 = Deleted; 1 = Dijual; 2 = Ditawar; 3 = Terjual;
       status: {
         type: Sequelize.INTEGER,
       },

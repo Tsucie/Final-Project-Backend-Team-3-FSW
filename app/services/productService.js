@@ -1,12 +1,20 @@
 /* eslint-disable no-useless-catch */
 const productRepository = require("../repositories/productRepository");
+const { Op } = require("sequelize");
 
 module.exports = {
-  async findAllPartially(filter, offset = 0, limit = 25) {
+  async findAllPartially(user_id, filter, offset = 0, limit = 25) {
     try {
       let condition = new Object({
         where: {
-          status: 1,
+          [Op.and]: [
+            {
+              user_id: { [Op.ne]: user_id }
+            },
+            {
+              status: { [Op.or]: [1, 2] },
+            },
+          ],
         },
         offset: offset,
         limit: limit,

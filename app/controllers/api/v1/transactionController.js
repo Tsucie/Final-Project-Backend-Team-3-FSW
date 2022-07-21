@@ -1,6 +1,8 @@
 const transactionService = require("../../../services/transactionService");
 const transactionStatus = require("../../../../utilities/transactionstatusenum");
 const productStatus = require("../../../../utilities/productstatusenum");
+const jwt = require("jsonwebtoken");
+const config = require("../../../../config/appconfig");
 
 module.exports = {
   async getListByIdBuyer(req, res) {
@@ -12,7 +14,7 @@ module.exports = {
       if (!tokenPayload.id) {
         return res.status(403).json({ status: "FORBIDDEN", message: "ID kosong" });
       }
-      let buys = transactionService.getByBuyer(tokenPayload.id);
+      let buys = await transactionService.getByBuyer(tokenPayload.id);
       return res.status(200).json({
         status: "TRANSACTION_BUYS",
         message: "Data pembelian",
@@ -34,7 +36,8 @@ module.exports = {
       if (!tokenPayload.id) {
         return res.status(403).json({ status: "FORBIDDEN", message: "ID kosong" });
       }
-      let sells = transactionService.getBySeller(tokenPayload.id);
+      console.log(tokenPayload.id);
+      let sells = await transactionService.getBySeller(tokenPayload.id);
       return res.status(200).json({
         status: "TRANSACTION_SELLS",
         message: "Data penjualan",
@@ -61,6 +64,7 @@ module.exports = {
         createdAt: new Date(),
         updatedAt: new Date(),
       });
+      if (!created) throw new Error("Gagal update data produk");
       return res.status(201).json({
         status: "CREATED",
         message: "Data transaksi berhasil dibuat",

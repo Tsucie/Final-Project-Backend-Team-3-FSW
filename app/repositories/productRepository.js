@@ -7,8 +7,14 @@ module.exports = {
   findById(id) {
     return Product.findOne({
       where: {
-        id,
-        status: 1,
+        [Op.and]: [
+            {
+              id: { [Op.eq]: id },
+            },
+            {
+              status: { [Op.or]: [1, 2] },
+            }
+          ],
       },
       include: [user, ProductCategory],
     });
