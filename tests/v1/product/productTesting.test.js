@@ -47,10 +47,7 @@ describe("API Product", () => {
       .set("Authorization", `Bearer ${token200}`)
       .then((res) => {
         expect(res.statusCode).toBe(200);
-        expect(res.body).toEqual({
-          status: expect.any(String),
-          data: expect.any(Object),
-        });
+        expect(res.body).toEqual(expect.any(Object));
       });
   });
 
@@ -67,7 +64,7 @@ describe("API Product", () => {
 
   it("Get Product by ID should response with 200 as status code", async () => {
     return await request(app)
-      .get("/api/v1/products/6")
+      .get("/api/v1/products/1")
       .then((res) => {
         expect(res.statusCode).toBe(200);
         expect(res.body).toEqual(expect.any(Object));
@@ -76,21 +73,21 @@ describe("API Product", () => {
 
   it("Get Product by ID not found with response code 404", async () => {
     return await request(app)
-      .get("/api/v1/product/1")
+      .get("/api/v1/products/10000")
       .then((res) => {
         expect(res.statusCode).toBe(404);
         expect(res.body).toEqual(expect.any(Object));
       });
   });
 
-  //   it("Get Product by ID data not complete found with response code 400", async () => {
-  //     return await request(app)
-  //       .get("/api/v1/product/jam")
-  //       .then((res) => {
-  //         expect(res.statusCode).toBe(400);
-  //         expect(res.body).toEqual(expect.any(Object));
-  //       });
-  //   });
+  it("Get Product by ID data not complete found with response code 500", async () => {
+    return await request(app)
+      .get("/api/v1/products/jam")
+      .then((res) => {
+        expect(res.statusCode).toBe(500);
+        expect(res.body).toEqual(expect.any(Object));
+      });
+  });
 
   it("Filter by Status should response with code 200", async () => {
     return await request(app)
@@ -147,6 +144,7 @@ describe("API Product", () => {
       .then((res) => {
         expect(res.statusCode).toBe(201);
         expect(res.body).toEqual(expect.any(Object));
+        idProduct = res.body.data.id;
       });
   });
 
@@ -180,7 +178,7 @@ describe("API Product", () => {
 
   it("Edit Product change name should response with code 201", async () => {
     return await request(app)
-      .put("/api/v1/products/6")
+      .put("/api/v1/products/1")
       .set("Authorization", `Bearer ${token200}`)
       .attach("photos", "")
       .field({
@@ -195,7 +193,7 @@ describe("API Product", () => {
 
   it("Edit Product photos with old image array and response code 201", async () => {
     return await request(app)
-      .put("/api/v1/products/6")
+      .put("/api/v1/products/1")
       .set("Authorization", `Bearer ${token200}`)
       .attach("photos", "")
       .field({
@@ -210,7 +208,7 @@ describe("API Product", () => {
 
   it("Edit Product wrong id should response code 500", async () => {
     return await request(app)
-      .put("/api/v1/products/4")
+      .put("/api/v1/products/")
       .set("Authorization", `Bearer ${token200}`)
       .attach("photos", "")
       .field({
@@ -218,30 +216,27 @@ describe("API Product", () => {
         oldImage: ["null", "null"],
       })
       .then((res) => {
-        expect(res.statusCode).toBe(500);
+        expect(res.statusCode).toBe(404);
         expect(res.body).toEqual(expect.any(Object));
       });
   });
 
-  it("Delete Product should response with code 200", async () => {
+  it("Delete Product should response with code 202", async () => {
     return await request(app)
-      .delete("/api/v1/products/" + idProduct)
+      .delete("/api/v1/products/stat/" + idProduct)
       .set("Authorization", `Bearer ${token200}`)
       .then((res) => {
         expect(res.statusCode).toBe(202);
-        expect(res.body).toEqual({
-          status: "ACCEPTED",
-          message: "Data berhasil dihapus",
-        });
+        expect(res.body).toEqual(expect.any(Object));
       });
   });
 
-  it("Failed Delete Product response code 500", async () => {
+  it("Failed Delete Product response code 404", async () => {
     return await request(app)
       .delete("/api/v1/products/lima")
       .set("Authorization", `Bearer ${token200}`)
       .then((res) => {
-        expect(res.statusCode).toBe(500);
+        expect(res.statusCode).toBe(404);
         expect(res.body).toEqual(expect.any(Object));
       });
   });

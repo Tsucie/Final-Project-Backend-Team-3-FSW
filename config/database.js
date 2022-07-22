@@ -7,7 +7,7 @@ const {
   DB_HOST = "ec2-52-22-136-117.compute-1.amazonaws.com",
   DB_NAME = "d7jnpue5rrkrlm",
 } = process.env;
-
+const { DB_PORT } = process.env;
 module.exports = {
   development: {
     username: DB_USERNAME,
@@ -18,17 +18,13 @@ module.exports = {
     ssl: true,
   },
   test: {
-    username: DB_USERNAME,
-    password: DB_PASSWORD,
-    database: `${DB_NAME}`,
-    host: DB_HOST,
+    username: "srifufgs",
+    password: "16tJpGKRrtJcarQSkJ55oFOUMG60qMse",
+    database: "srifufgs",
+    host: "satao.db.elephantsql.com",
     dialect: "postgres",
-    dialectOptions: {
-      ssl: {
-        require: true,
-        rejectUnauthorized: false,
-      },
-    },
+    port: DB_PORT,
+    ssl: true,
   },
   production: {
     username: DB_USERNAME,

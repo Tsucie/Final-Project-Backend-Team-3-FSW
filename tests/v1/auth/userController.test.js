@@ -4,7 +4,7 @@ const app = require("../../../app");
 
 const temp500 = { emails: "gaada@gmail.com", passwords: "123", names: "gaada" }; // Salah nama field
 const tempLogin = { email: "echa@gmail.com", password: "123" }; // Login
-const tempRegist = { email: "cimen@gmail.com", password: "123", name: "cimen" }; // Register
+const tempRegist = { email: "buat@gmail.com", password: "123", name: "cimen" }; // Register
 const login401 = { email: "echa@gmail.com", password: "222" }; // Wrong Password
 const login404 = { email: "gaada@gmail.com", password: "123" }; // Invalid Email
 const user = { name: "echa", city: "Serang", address: "Null", contact: "+629412131" }; // Data User Update
@@ -167,10 +167,7 @@ describe("POST /api/v1/register", () => {
       .send(user400)
       .then((res) => {
         expect(res.statusCode).toBe(500);
-        expect(res.body).toEqual({
-          status: "INTERNAL SERVER ERROR",
-          message: expect.any(String),
-        });
+        expect(res.body).toEqual(expect.any(Object));
       });
   });
 

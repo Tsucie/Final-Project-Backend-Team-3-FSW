@@ -1,0 +1,15 @@
+#App
+NODE_ENV=development
+PORT=8080
+SERVER=http://localhost:
+SECRET_KEY = BinarCommerce
+#Database
+DB_HOST=satao.db.elephantsql.com
+DB_PORT=5432
+DB_USERNAME=srifufgs
+DB_PASSWORD=16tJpGKRrtJcarQSkJ55oFOUMG60qMse
+DB_NAME=srifufgs
+
+API_KEY= 123974827818567
+API_SECRET= JI8L-dXoLmhwJxHQrnnTxobvB7Q
+CLOUD_NAME=dpey4vc0p

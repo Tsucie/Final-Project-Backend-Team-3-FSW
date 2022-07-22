@@ -25,7 +25,7 @@
             <div class='fl pad1y space-right2'>
                 <span class="strong">100% </span>
                 <span class="quiet">Statements</span>
-                <span class='fraction'>43/43</span>
+                <span class='fraction'>55/55</span>
             </div>
         
             
@@ -46,7 +46,7 @@
             <div class='fl pad1y space-right2'>
                 <span class="strong">100% </span>
                 <span class="quiet">Lines</span>
-                <span class='fraction'>43/43</span>
+                <span class='fraction'>55/55</span>
             </div>
         
             
@@ -106,7 +106,31 @@
 <a name='L41'></a><a href='#L41'>41</a>
 <a name='L42'></a><a href='#L42'>42</a>
 <a name='L43'></a><a href='#L43'>43</a>
-<a name='L44'></a><a href='#L44'>44</a></td><td class="line-coverage quiet"><span class="cline-any cline-yes">1x</span>
+<a name='L44'></a><a href='#L44'>44</a>
+<a name='L45'></a><a href='#L45'>45</a>
+<a name='L46'></a><a href='#L46'>46</a>
+<a name='L47'></a><a href='#L47'>47</a>
+<a name='L48'></a><a href='#L48'>48</a>
+<a name='L49'></a><a href='#L49'>49</a>
+<a name='L50'></a><a href='#L50'>50</a>
+<a name='L51'></a><a href='#L51'>51</a>
+<a name='L52'></a><a href='#L52'>52</a>
+<a name='L53'></a><a href='#L53'>53</a>
+<a name='L54'></a><a href='#L54'>54</a>
+<a name='L55'></a><a href='#L55'>55</a>
+<a name='L56'></a><a href='#L56'>56</a></td><td class="line-coverage quiet"><span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
@@ -169,21 +193,33 @@ apiRouter.delete("/api/v1/delete/:email", controllers.api.v1.userController.dele
 apiRouter.get("/api/v1/productCategories", controllers.api.v1.productCategoryController.getAll);
 apiRouter.get("/api/v1/productCategories/:id", controllers.api.v1.productCategoryController.getById);
 apiRouter.get("/api/v1/products", controllers.api.v1.productController.getAllPartial);
+&nbsp;
 apiRouter.get("/api/v1/products/:id", controllers.api.v1.productController.getById);
+apiRouter.get("/api/v1/products/stat/:id", controllers.api.v1.productController.getByIdWithoutStatus);
 apiRouter.get("/api/v1/name", controllers.api.v1.productController.getProductByName);
 apiRouter.get("/api/v1/status", controllers.api.v1.productController.getProductsByStatus);
 // Authorized Routes (All)
 apiRouter.get("/api/v1/whoami", authorize.all, controllers.api.v1.authController.whoAmI);
 apiRouter.get("/api/v1/users/:id", authorize.all, controllers.api.v1.userController.getById);
 apiRouter.put("/api/v1/users/:id", authorize.all, upload.single("photo"), controllers.api.v1.userController.edit);
-&nbsp;
+// apiRouter.get("/api/v1/notifications", authorize.all, controllers.api.v1.notificationController.getList);
+// apiRouter.get("/api/v1/notifications/:id", authorize.all, controllers.api.v1.notificationController.getById);
+// apiRouter.post("/api/v1/notifications", authorize.all, controllers.api.v1.notificationController.create);
+// apiRouter.put("/api/v1/notifications/:id", authorize.all, controllers.api.v1.notificationController.update);
+// apiRouter.delete("/api/v1/notifications/:id", authorize.all, controllers.api.v1.notificationController.delete);
+apiRouter.get("/api/v1/transactions/buyer", authorize.all, controllers.api.v1.transactionController.getListByIdBuyer);
+apiRouter.get("/api/v1/transactions/seller", authorize.all, controllers.api.v1.transactionController.getListByIdSeller);
+apiRouter.post("/api/v1/transactions", authorize.all, controllers.api.v1.transactionController.create);
+apiRouter.put("/api/v1/transactions/:id", authorize.all, controllers.api.v1.transactionController.update);
+apiRouter.put("/api/v1/transactions", authorize.all, controllers.api.v1.transactionController.updateStatus);
+apiRouter.delete("/api/v1/transactions/:id", authorize.all, controllers.api.v1.transactionController.delete);
 // Authorized Routes (Seller)
-apiRouter.post("/api/v1/productCategories", authorize.seller, controllers.api.v1.productCategoryController.create);
-apiRouter.put("/api/v1/productCategories/:id", authorize.seller, controllers.api.v1.productCategoryController.edit);
-apiRouter.delete("/api/v1/productCategories/:id", authorize.seller, controllers.api.v1.productCategoryController.delete);
+// apiRouter.post("/api/v1/productCategories", authorize.seller, controllers.api.v1.productCategoryController.create);
+// apiRouter.put("/api/v1/productCategories/:id", authorize.seller, controllers.api.v1.productCategoryController.edit);
+// apiRouter.delete("/api/v1/productCategories/:id", authorize.seller, controllers.api.v1.productCategoryController.delete);
 apiRouter.post("/api/v1/products", authorize.seller, upload.array("photos", 5), controllers.api.v1.productController.create);
 apiRouter.put("/api/v1/products/:id", authorize.seller, upload.array("photos", 5), controllers.api.v1.productController.edit);
-apiRouter.delete("/api/v1/products/:id", authorize.seller, controllers.api.v1.productController.delete);
+apiRouter.delete("/api/v1/products/stat/:id", authorize.seller, controllers.api.v1.productController.delete);
 apiRouter.get("/api/v1/errors", () =&gt; {
   throw new Error("Second Hand Error");
 });
@@ -199,7 +235,7 @@ module.exports = apiRouter;
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
-                at Mon Jul 18 2022 21:40:48 GMT+0700 (Western Indonesia Time)
+                at Fri Jul 22 2022 20:47:04 GMT+0700 (Western Indonesia Time)
             </div>
         <script src="../prettify.js"></script>
         <script>

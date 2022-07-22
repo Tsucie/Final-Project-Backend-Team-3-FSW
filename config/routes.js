@@ -27,11 +27,11 @@ apiRouter.get("/api/v1/status", controllers.api.v1.productController.getProducts
 apiRouter.get("/api/v1/whoami", authorize.all, controllers.api.v1.authController.whoAmI);
 apiRouter.get("/api/v1/users/:id", authorize.all, controllers.api.v1.userController.getById);
 apiRouter.put("/api/v1/users/:id", authorize.all, upload.single("photo"), controllers.api.v1.userController.edit);
-apiRouter.get("/api/v1/notifications", authorize.all, controllers.api.v1.notificationController.getList);
-apiRouter.get("/api/v1/notifications/:id", authorize.all, controllers.api.v1.notificationController.getById);
-apiRouter.post("/api/v1/notifications", authorize.all, controllers.api.v1.notificationController.create);
-apiRouter.put("/api/v1/notifications/:id", authorize.all, controllers.api.v1.notificationController.update);
-apiRouter.delete("/api/v1/notifications/:id", authorize.all, controllers.api.v1.notificationController.delete);
+// apiRouter.get("/api/v1/notifications", authorize.all, controllers.api.v1.notificationController.getList);
+// apiRouter.get("/api/v1/notifications/:id", authorize.all, controllers.api.v1.notificationController.getById);
+// apiRouter.post("/api/v1/notifications", authorize.all, controllers.api.v1.notificationController.create);
+// apiRouter.put("/api/v1/notifications/:id", authorize.all, controllers.api.v1.notificationController.update);
+// apiRouter.delete("/api/v1/notifications/:id", authorize.all, controllers.api.v1.notificationController.delete);
 apiRouter.get("/api/v1/transactions/buyer", authorize.all, controllers.api.v1.transactionController.getListByIdBuyer);
 apiRouter.get("/api/v1/transactions/seller", authorize.all, controllers.api.v1.transactionController.getListByIdSeller);
 apiRouter.post("/api/v1/transactions", authorize.all, controllers.api.v1.transactionController.create);
@@ -39,9 +39,9 @@ apiRouter.put("/api/v1/transactions/:id", authorize.all, controllers.api.v1.tran
 apiRouter.put("/api/v1/transactions", authorize.all, controllers.api.v1.transactionController.updateStatus);
 apiRouter.delete("/api/v1/transactions/:id", authorize.all, controllers.api.v1.transactionController.delete);
 // Authorized Routes (Seller)
-apiRouter.post("/api/v1/productCategories", authorize.seller, controllers.api.v1.productCategoryController.create);
-apiRouter.put("/api/v1/productCategories/:id", authorize.seller, controllers.api.v1.productCategoryController.edit);
-apiRouter.delete("/api/v1/productCategories/:id", authorize.seller, controllers.api.v1.productCategoryController.delete);
+// apiRouter.post("/api/v1/productCategories", authorize.seller, controllers.api.v1.productCategoryController.create);
+// apiRouter.put("/api/v1/productCategories/:id", authorize.seller, controllers.api.v1.productCategoryController.edit);
+// apiRouter.delete("/api/v1/productCategories/:id", authorize.seller, controllers.api.v1.productCategoryController.delete);
 apiRouter.post("/api/v1/products", authorize.seller, upload.array("photos", 5), controllers.api.v1.productController.create);
 apiRouter.put("/api/v1/products/:id", authorize.seller, upload.array("photos", 5), controllers.api.v1.productController.edit);
 apiRouter.delete("/api/v1/products/stat/:id", authorize.seller, controllers.api.v1.productController.delete);
