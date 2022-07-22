@@ -65,10 +65,11 @@ module.exports = {
         updatedAt: new Date(),
       });
       if (!created) throw new Error("Gagal update data produk");
+      let data = await transactionService.getByBuyer(user_id);
       return res.status(201).json({
         status: "CREATED",
         message: "Data transaksi berhasil dibuat",
-        data: created,
+        data,
       });
     } catch (error) {
       return res.status(500).json({
@@ -98,16 +99,15 @@ module.exports = {
   },
   async updateStatus(req, res) {
     try {
+      console.log(req.body);
       let { id, status, product_id, product_status } = req.body;
       if (!id || !status || !product_id || !product_status) {
         return res.status(400).json({ status: "BAD REQUEST", message: "Data tidak lengkap" });
       }
       if (product_status === productStatus.Sold) {
         transactionService.updateSold(product_id);
-      } else {
-        let result = await transactionService.updateAllStatus({ id: product_id, status: productStatus }, { id, status });
-        if (!result) throw new Error("Failed update Product Data");
       }
+      await transactionService.updateAllStatus({ id: product_id, status: product_status }, { id, status });
       return res.status(201).json({
         status: "ALL UPDATED",
         message: "Transaction data has updated",
