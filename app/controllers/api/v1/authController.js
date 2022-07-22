@@ -60,20 +60,19 @@ module.exports = {
       const token = bearerToken.split("Bearer ")[1];
       const tokenPayload = jwt.verify(token, config.app.jwt_secret_key);
 
-      req.user = await userService.findByEmail(tokenPayload.email);
+      const user = await userService.findByEmail(tokenPayload.email);
 
-      if (!req.user) {
+      if (!user) {
         return res.status(404).json({
           status: "NOT FOUND",
           message: "Pengguna tidak ditemukan",
         });
       }
-      const result = req.user;
 
       res.status(200).json({
         status: "OK",
         message: "Data berhasil ditemukan",
-        result,
+        user,
       });
     } catch (err) {
       if (err.message.includes("jwt expired")) {
