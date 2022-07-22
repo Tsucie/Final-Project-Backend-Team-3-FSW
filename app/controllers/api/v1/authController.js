@@ -73,7 +73,7 @@ module.exports = {
       res.status(200).json({
         status: "OK",
         message: "Data berhasil ditemukan",
-        data: result,
+        result,
       });
     } catch (err) {
       if (err.message.includes("jwt expired")) {
