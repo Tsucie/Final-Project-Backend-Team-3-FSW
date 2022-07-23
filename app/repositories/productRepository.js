@@ -8,13 +8,13 @@ module.exports = {
     return Product.findOne({
       where: {
         [Op.and]: [
-            {
-              id: { [Op.eq]: id },
-            },
-            {
-              status: { [Op.or]: [1, 2] },
-            }
-          ],
+          {
+            id: { [Op.eq]: id },
+          },
+          {
+            status: { [Op.or]: [1, 2] },
+          },
+        ],
       },
       include: [user, ProductCategory],
     });
@@ -27,7 +27,7 @@ module.exports = {
             id: { [Op.eq]: id },
           },
           {
-            status: { [Op.or]: [1, 2] },
+            status: { [Op.or]: [1, 2, 3] },
           },
         ],
       },
@@ -72,6 +72,6 @@ module.exports = {
     return Product.update(data, { where: { id }, returning: true, plain: true });
   },
   delete(id) {
-    return Product.update({status: 0, deletedAt: new Date()}, { where: { id }});
+    return Product.update({ status: 0, deletedAt: new Date() }, { where: { id } });
   },
 };
