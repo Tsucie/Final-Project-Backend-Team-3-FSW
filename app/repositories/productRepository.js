@@ -52,7 +52,7 @@ module.exports = {
             user_id: { [Op.eq]: user_id },
           },
           {
-            status: { [Op.or]: [1, 2] },
+            status: { [Op.or]: [1, 2, 3] },
           },
         ],
       },
