@@ -40,7 +40,9 @@ module.exports = {
         name: {
           [Op.iLike]: `%${name}%`,
         },
-        status: 1,
+        status: {
+          [Op.or]: [1, 2],
+        },
       },
     });
   },

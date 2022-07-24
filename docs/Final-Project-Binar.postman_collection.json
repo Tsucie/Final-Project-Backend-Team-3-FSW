@@ -1,0 +1,594 @@
+{
+  "info": {
+    "_postman_id": "8c4b501a-90d4-4f83-9369-ed2c56688b2b",
+    "name": "Final-Project-Binar",
+    "description": "API Docs v1.0.0",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "_exporter_id": "20451535"
+  },
+  "item": [
+    {
+      "name": "Auth",
+      "item": [
+        {
+          "name": "Login",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"email\": \"rizkyadji@gmail.com\",\r\n    \"password\": \"password\"\r\n}"
+            },
+            "url": {
+              "raw": "{{URL}}/api/v1/login",
+              "host": ["{{URL}}"],
+              "path": ["api", "v1", "login"]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "whoami",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwibmFtZSI6IlJpemt5IEFkamkgUGFuZ2VzdHUiLCJlbWFpbCI6InJpemt5YWRqaUBnbWFpbC5jb20iLCJ0eXBlIjoxLCJpYXQiOjE2NTU5Nzk3MzMsImV4cCI6MTY1NjAyMjkzM30.V3q8wyttqF3dVhd1GtUOl5Ui5qJ_hi-kXYV2yy-PYgA",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{URL}}/api/v1/whoami",
+              "host": ["{{URL}}"],
+              "path": ["api", "v1", "whoami"]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "google",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{URL}}/api/v1/auth/google",
+              "host": ["{{URL}}"],
+              "path": ["api", "v1", "auth", "google"]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "ProductCategory",
+      "item": [
+        {
+          "name": "GetAll",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{URL}}/api/v1/productCategories",
+              "host": ["{{URL}}"],
+              "path": ["api", "v1", "productCategories"]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "GetById",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{URL}}/api/v1/productCategories/6",
+              "host": ["{{URL}}"],
+              "path": ["api", "v1", "productCategories", "6"]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Product",
+      "item": [
+        {
+          "name": "GetAllPartially",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{URL}}/api/v1/products?filter=1&offset=0",
+              "host": ["{{URL}}"],
+              "path": ["api", "v1", "products"],
+              "query": [
+                {
+                  "key": "filter",
+                  "value": "1"
+                },
+                {
+                  "key": "offset",
+                  "value": "0"
+                },
+                {
+                  "key": "limit",
+                  "value": "1",
+                  "disabled": true
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "GetbyId",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{URL}}/api/v1/products/6",
+              "host": ["{{URL}}"],
+              "path": ["api", "v1", "products", "6"]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "getByIdWithoutStatus",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{URL}}/api/v1/products/6",
+              "host": ["{{URL}}"],
+              "path": ["api", "v1", "products", "6"]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Create",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwibmFtZSI6IlJpemt5IEFkamkgUGFuZ2VzdHUiLCJlbWFpbCI6InJpemt5YWRqaUBnbWFpbC5jb20iLCJ0eXBlIjoxLCJpYXQiOjE2NTY1MTE4MTUsImV4cCI6MTY1NjU1NTAxNX0.9Ed3eahmLfLyR0VMs2Iogg8ytAGRdx23xcLl9LKHQXc",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "formdata",
+              "formdata": [
+                {
+                  "key": "category_id",
+                  "value": "1",
+                  "type": "text"
+                },
+                {
+                  "key": "user_id",
+                  "value": "1",
+                  "type": "text"
+                },
+                {
+                  "key": "name",
+                  "value": "Jam Tangan Casio",
+                  "type": "text"
+                },
+                {
+                  "key": "price",
+                  "value": "999000",
+                  "type": "text"
+                },
+                {
+                  "key": "description",
+                  "value": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
+                  "type": "text"
+                },
+                {
+                  "key": "photos",
+                  "type": "file",
+                  "src": ["/C:/Users/rizky.adji/Downloads/Rectangle 24casio-analog.png", "/C:/Users/rizky.adji/Downloads/Rectangle 23casio-digital.png"]
+                }
+              ]
+            },
+            "url": {
+              "raw": "{{URL}}/api/v1/products",
+              "host": ["{{URL}}"],
+              "path": ["api", "v1", "products"]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Update",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwibmFtZSI6IlJpemt5IEFkamkgUGFuZ2VzdHUiLCJlbWFpbCI6InJpemt5YWRqaUBnbWFpbC5jb20iLCJ0eXBlIjoxLCJpYXQiOjE2NTY1MTE4MTUsImV4cCI6MTY1NjU1NTAxNX0.9Ed3eahmLfLyR0VMs2Iogg8ytAGRdx23xcLl9LKHQXc",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "multipart/form-data",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "formdata",
+              "formdata": [
+                {
+                  "key": "category_id",
+                  "value": "1",
+                  "type": "text"
+                },
+                {
+                  "key": "name",
+                  "value": "Jam Tangan Casio",
+                  "type": "text"
+                },
+                {
+                  "key": "photos",
+                  "type": "file",
+                  "src": ["/C:/Users/rizky.adji/Downloads/Rectangle 24casio-analog.png", "/C:/Users/rizky.adji/Downloads/Rectangle 23casio-digital.png"]
+                },
+                {
+                  "key": "price",
+                  "value": "899000",
+                  "type": "text"
+                },
+                {
+                  "key": "is_sold",
+                  "value": "true",
+                  "type": "text"
+                }
+              ]
+            },
+            "url": {
+              "raw": "{{URL}}/api/v1/products/6",
+              "host": ["{{URL}}"],
+              "path": ["api", "v1", "products", "6"]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Delete",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwibmFtZSI6IlJpemt5IEFkamkgUGFuZ2VzdHUiLCJlbWFpbCI6InJpemt5YWRqaUBnbWFpbC5jb20iLCJ0eXBlIjoxLCJpYXQiOjE2NTY1MTE4MTUsImV4cCI6MTY1NjU1NTAxNX0.9Ed3eahmLfLyR0VMs2Iogg8ytAGRdx23xcLl9LKHQXc",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "DELETE",
+            "header": [],
+            "url": {
+              "raw": "{{URL}}/api/v1/products/5",
+              "host": ["{{URL}}"],
+              "path": ["api", "v1", "products", "5"]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "GetbyName",
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          },
+          "request": {
+            "method": "GET",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:8080/api/v1/name?name=jam",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "8080",
+              "path": ["api", "v1", "name"],
+              "query": [
+                {
+                  "key": "name",
+                  "value": "jam"
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "GetByStatus",
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          },
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwibmFtZSI6InJheWlzYSAiLCJlbWFpbCI6ImVjaGFAZ21haWwuY29tIiwidHlwZSI6MSwiaWF0IjoxNjU2ODUxMTM5LCJleHAiOjE2NTY4OTQzMzl9.-937ePYaHIqvvMmL-GKet6bgLItAsGLg97A5u3-SptM",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "GET",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:8080/api/v1/name",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "8080",
+              "path": ["api", "v1", "name"]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "User",
+      "item": [
+        {
+          "name": "Register",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"email\": \"sangit@gmail.com\",\r\n    \"password\": \"password\",\r\n    \"name\": \"Sangit\",\r\n    \"type_id\": 2\r\n}"
+            },
+            "url": {
+              "raw": "{{URL}}/api/v1/register",
+              "host": ["{{URL}}"],
+              "path": ["api", "v1", "register"]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Update",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwibmFtZSI6IlJpemt5IEFkamkiLCJlbWFpbCI6InJpemt5YWRqaUBnbWFpbC5jb20iLCJ0eXBlIjoxLCJpYXQiOjE2NTU5NzU3NjAsImV4cCI6MTY1NjAxODk2MH0.dVYugV3mncc-5oey15RWHRGcmxEn0bv3jedwTvMXkFk",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "multipart/form-data",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "formdata",
+              "formdata": [
+                {
+                  "key": "name",
+                  "value": "Rizky Adji Pangestu",
+                  "type": "text"
+                },
+                {
+                  "key": "contact",
+                  "value": "082919822",
+                  "type": "text"
+                },
+                {
+                  "key": "city",
+                  "value": "Tangerang",
+                  "type": "text"
+                },
+                {
+                  "key": "address",
+                  "value": "Jl cempaka 187",
+                  "type": "text"
+                },
+                {
+                  "key": "photo",
+                  "type": "file",
+                  "src": "/C:/Users/rizky.adji/Downloads/Bugatti Veyron.webp"
+                }
+              ]
+            },
+            "url": {
+              "raw": "{{URL}}/api/v1/users/1",
+              "host": ["{{URL}}"],
+              "path": ["api", "v1", "users", "1"]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "GetById",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwibmFtZSI6IlJpemt5IEFkamkiLCJlbWFpbCI6InJpemt5YWRqaUBnbWFpbC5jb20iLCJ0eXBlIjoxLCJpYXQiOjE2NTU5NzU3NjAsImV4cCI6MTY1NjAxODk2MH0.dVYugV3mncc-5oey15RWHRGcmxEn0bv3jedwTvMXkFk",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "GET",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{URL}}/api/v1/users/1",
+              "host": ["{{URL}}"],
+              "path": ["api", "v1", "users", "1"]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "DELETE",
+          "request": {
+            "method": "GET",
+            "header": []
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Transaction",
+      "item": [
+        {
+          "name": "GetBuys",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NSwibmFtZSI6IlJpemt5IEFkamkiLCJlbWFpbCI6InJpemt5YWRqaTIxQGdtYWlsLmNvbSIsInR5cGUiOjEsImdvb2dsZUlkIjoiMTA0NzIzNjQ0NDk0Njk3ODk3NDA5IiwicmVnaXN0ZXJlZFZpYSI6Imdvb2dsZSIsImNyZWF0ZWRBdCI6IjIwMjItMDctMjBUMTM6NTI6NDIuNjQ5WiIsInVwZGF0ZWRBdCI6IjIwMjItMDctMjFUMDM6MjU6NDkuMjM4WiIsImlhdCI6MTY1ODM3OTM5NiwiZXhwIjoxNjU4NDIyNTk2fQ.27aDx9db-VtIPaV5Uukua0qAN3wzrWwyn9bm-HaXxw8",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "GET",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{URL}}/api/v1/transactions/buyer",
+              "host": ["{{URL}}"],
+              "path": ["api", "v1", "transactions", "buyer"]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "GetSells",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwibmFtZSI6IlJpemt5IEFkamkgUGFuZ2VzdHUiLCJlbWFpbCI6InJpemt5YWRqaUBnbWFpbC5jb20iLCJ0eXBlIjoxLCJpYXQiOjE2NTgzNzQwMzQsImV4cCI6MTY1ODQxNzIzNH0.4Ue8o535OR1eNNQj4V_Om4kvCnpX6TgwUPSX73z-xMI",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "GET",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{URL}}/api/v1/transactions/seller",
+              "host": ["{{URL}}"],
+              "path": ["api", "v1", "transactions", "seller"]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Create Transaction",
+          "request": {
+            "method": "GET",
+            "header": []
+          },
+          "response": []
+        },
+        {
+          "name": "Create Transaction Copy",
+          "request": {
+            "method": "GET",
+            "header": []
+          },
+          "response": []
+        },
+        {
+          "name": "Update Transaction",
+          "request": {
+            "method": "GET",
+            "header": []
+          },
+          "response": []
+        },
+        {
+          "name": "Update Transaction Status",
+          "request": {
+            "method": "GET",
+            "header": []
+          },
+          "response": []
+        }
+      ]
+    }
+  ]
+}
